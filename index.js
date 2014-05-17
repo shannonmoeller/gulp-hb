@@ -6,6 +6,10 @@ var glob = require('glob'),
     mixIn = require('mout/object/mixIn'),
     path = require('path');
 
+function req(file) {
+    return require(path.join(process.cwd(), file));
+}
+
 function _getFiles(list, src) {
     return list.concat(glob.sync(src));
 }
@@ -19,11 +23,11 @@ function getName(file) {
 }
 
 function registerData(data, file) {
-    return mixIn(data, require(file));
+    return mixIn(data, req(file));
 }
 
 function registerHelper(hb, file) {
-    var helper = require(file),
+    var helper = req(file),
         name = getName(file);
 
     if (!helper) {
@@ -45,7 +49,7 @@ function registerHelper(hb, file) {
 }
 
 function registerPartial(hb, file) {
-    var partial = require(file),
+    var partial = req(file),
         name = getName(file);
 
     if (!partial) {
