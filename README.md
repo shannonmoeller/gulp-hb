@@ -1,6 +1,6 @@
 # gulp-hb
 
-A sane static Handlebars Gulp plugin.
+A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
 [![NPM version](https://badge.fury.io/js/gulp-hb.png)](http://badge.fury.io/js/gulp-hb)
 [![Build Status](https://travis-ci.org/shannonmoeller/gulp-hb.png?branch=master)](https://travis-ci.org/shannonmoeller/gulp-hb)
@@ -17,15 +17,15 @@ With [Node.js](http://nodejs.org):
 
 ### `hb([options])`
 
-Returns a Gulp-compatible transform stream that compiles handlebars templates to static output. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
+Returns a Gulp-compatible transform stream that compiles handlebars templates to static output.
 
-### Options
+## Options
 
-#### `data` _`String|Array.<String>`_
+### `data` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
 
-#### `helpers` _`String|Array.<String>`_
+### `helpers` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching helper files. Helper files are JavaScript files that define one or more helpers.
 
@@ -64,7 +64,7 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
-#### `partials` _`String|Array.<String>`_
+### `partials` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
 
