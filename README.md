@@ -19,15 +19,13 @@ With [Node.js](http://nodejs.org):
 
 Returns a Gulp-compatible transform stream that compiles handlebars templates to static output. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
-#### `options` `{Object}`
+### Options
 
-Optional grammar overrides.
-
-##### `options.data` _`String|Array.<String>`_
+#### `data` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
 
-##### `options.helpers` _`String|Array.<String>`_
+#### `helpers` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching helper files. Helper files are JavaScript files that define one or more helpers.
 
@@ -66,7 +64,7 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
-##### `options.partials` _`String|Array.<String>`_
+#### `partials` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
 
