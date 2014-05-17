@@ -1,0 +1,43 @@
+{
+  "name": "gulp-hb",
+  "version": "0.1.0",
+  "description": "A sane Handlebars Gulp plugin.",
+  "keywords": [
+    "gulp",
+    "hb",
+    "hbs",
+    "handlebars",
+    "static"
+  ],
+  "homepage": "https://github.com/shannonmoeller/gulp-hb",
+  "bugs": "https://github.com/shannonmoeller/gulp-hb/issues",
+  "license": "MIT",
+  "author": "Shannon Moeller <me@shannonmoeller.com> (http://shannonmoeller.com)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shannonmoeller/gulp-hb.git"
+  },
+  "scripts": {
+    "coveralls": "gulp cover && cat ./coverage/lcov.info | coveralls",
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "map-stream": "^0.1.0",
+    "glob": "^3.2.9",
+    "mout": "^0.9.1",
+    "handlebars": "^2.0.0-alpha.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-istanbul": "^0.2.0",
+    "gulp-jasmine": "^0.2.0",
+    "gulp-jscs": "^0.5.0",
+    "gulp-jshint": "^1.6.1",
+    "jshint-stylish": "^0.2.0",
+    "vinyl-fs": "^0.1.4"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  }
+}
