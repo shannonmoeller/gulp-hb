@@ -71,16 +71,29 @@ function registerPartial(hb, file) {
 }
 
 module.exports = function (options) {
-    var data = {};
-
     options = options || {};
+
+    var data = {},
+        includeFile = options.file;
+
+    if (includeFile === undefined) {
+        includeFile = true;
+    }
+
     getFiles(options.data).reduce(registerData, data);
     getFiles(options.helpers).reduce(registerHelper, hb);
     getFiles(options.partials).reduce(registerPartial, hb);
 
     return map(function (file, cb) {
-        var template = hb.compile(file.contents.toString());
+        var locals = Object.create(data),
+            template = hb.compile(file.contents.toString());
+
+        if (includeFile) {
+            locals.file = file;
+        }
+
         file.contents = new Buffer(template(data));
+
         cb(null, file);
     });
 };
