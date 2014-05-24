@@ -92,7 +92,7 @@ module.exports = function (options) {
             locals.file = file;
         }
 
-        file.contents = new Buffer(template(data));
+        file.contents = new Buffer(template(locals));
 
         cb(null, file);
     });
