@@ -23,10 +23,10 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "map-stream": "^0.1.0",
     "glob": "^3.2.9",
-    "mout": "^0.9.1",
-    "handlebars": "^2.0.0-alpha.2"
+    "handlebars": "^2.0.0-alpha.2",
+    "map-stream": "^0.1.0",
+    "mout": "^0.9.1"
   },
   "devDependencies": {
     "gulp": "^3.6.2",

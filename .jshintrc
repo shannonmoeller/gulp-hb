@@ -2,7 +2,7 @@
     "asi": false,
     "bitwise": false,
     "boss": false,
-    "browser": false,
+    "browser": true,
     "camelcase": true,
     "couch": false,
     "curly": true,
@@ -18,7 +18,7 @@
     "funcscope": false,
     "globalstrict": false,
     "immed": true,
-    "indent": 4,
+    "indent": false,
     "iterator": false,
     "jquery": false,
     "lastsemic": false,
@@ -65,6 +65,8 @@
     "yui": false,
 
     "globals": {
+        "afterEach": true,
+        "beforeEach": true,
         "describe": true,
         "expect": true,
         "it": true,

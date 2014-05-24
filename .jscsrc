@@ -22,10 +22,10 @@
     "requireParenthesesAroundIIFE": true,
     "requireSpacesInsideObjectBrackets": "all",
     "safeContextKeyword": "that",
-    "validateIndentation": 4,
+    "validateIndentation": "\t",
 
     "disallowImplicitTypeConversion": [
-        "numeric", "boolean", "binary", "string"
+        "numeric", "binary", "string"
     ],
     "disallowKeywords": [
         "with"
