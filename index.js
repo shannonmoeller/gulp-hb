@@ -45,6 +45,7 @@ function registerHelper(hb, file) {
     }
 
     hb.registerHelper(helper);
+
     return hb;
 }
 
@@ -67,6 +68,7 @@ function registerPartial(hb, file) {
     }
 
     hb.registerPartial(partial);
+
     return hb;
 }
 

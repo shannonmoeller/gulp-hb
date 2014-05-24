@@ -25,6 +25,30 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
 
+### `file` _`Boolean`_ (default: true)
+
+Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) for example.
+
+```js
+var gulp = require('gulp'),
+    frontMatter = require('gulp-front-matter'),
+    hb = require('gulp-hb');
+
+gulp.task('default', function () {
+    gulp.src('src/{,posts/}**/*.html')
+        .pipe(frontMatter())
+        .pipe(hb())
+        .pipe(gulp.dest('./web/'));
+});
+```
+
+```html
+---
+title: Hello World
+---
+<h1>{{file.frontMatter.title}}</h1>
+```
+
 ### `helpers` _`String|Array.<String>`_
 
 Glob string or array of glob strings matching helper files. Helper files are JavaScript files that define one or more helpers.
