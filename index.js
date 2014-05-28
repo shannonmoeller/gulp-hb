@@ -7,7 +7,9 @@ var glob = require('glob'),
 	path = require('path');
 
 function req(file) {
-	return require(path.join(process.cwd(), file));
+	file = path.join(process.cwd(), file);
+	delete require.cache[require.resolve(file)];
+	return require();
 }
 
 function _getFiles(list, src) {
