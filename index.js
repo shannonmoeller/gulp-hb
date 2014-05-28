@@ -9,7 +9,7 @@ var glob = require('glob'),
 function req(file) {
 	file = path.join(process.cwd(), file);
 	delete require.cache[require.resolve(file)];
-	return require();
+	return require(file);
 }
 
 function _getFiles(list, src) {
