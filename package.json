@@ -1,6 +1,6 @@
 {
   "name": "gulp-hb",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "A sane Handlebars Gulp plugin.",
   "keywords": [
     "gulp",
@@ -29,6 +29,7 @@
     "mout": "^0.9.1"
   },
   "devDependencies": {
+    "glob2base": "0.0.12",
     "gulp": "^3.6.2",
     "gulp-istanbul": "^0.2.0",
     "gulp-jasmine": "^0.2.0",
