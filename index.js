@@ -14,16 +14,16 @@ function req(file) {
 
 function _getFiles(list, src) {
 	var matches = glob.Glob(src, {
-		sync: true
-	});
-	var base = glob2base(matches);
-	var files = matches.found.map(function(file) {
-		return {
-			base: base,
-			relative: path.relative(base, file),
-			path: path.join(process.cwd(), file)
-		};
-	});
+			sync: true
+		}),
+		base = glob2base(matches),
+		files = matches.found.map(function(file) {
+			return {
+				base: base,
+				relative: path.relative(base, file),
+				path: path.join(process.cwd(), file)
+			};
+		});
 
 	return list.concat(files);
 }
@@ -33,8 +33,9 @@ function getFiles(src) {
 }
 
 function getName(file) {
-	var basename = path.basename(file.path, path.extname(file.path));
-	var dirname = path.dirname(file.relative);
+	var basename = path.basename(file.path, path.extname(file.path)),
+		dirname = path.dirname(file.relative);
+
 	return path.join(dirname, basename);
 }
 
