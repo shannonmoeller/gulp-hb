@@ -4,10 +4,10 @@ var gulp = require('gulp'),
 	paths = {
 		gulp: './gulpfile.js',
 		src: './index.js',
-		test: './test/**/*Spec.js'
+		test: './test/**/*.{e2e,spec}.js'
 	};
 
-gulp.task('default', ['lint', 'test']);
+gulp.task('default', ['test']);
 
 gulp.task('lint', function () {
 	var jscs = require('gulp-jscs'),
@@ -25,15 +25,16 @@ gulp.task('cover', function () {
 
 	return gulp
 		.src(paths.src)
-		.pipe(istanbul());
+		.pipe(istanbul())
+		.pipe(istanbul.hookRequire());
 });
 
-gulp.task('test', ['cover'], function () {
+gulp.task('test', ['lint', 'cover'], function () {
 	var istanbul = require('gulp-istanbul'),
-		jasmine = require('gulp-jasmine');
+		mocha = require('gulp-mocha');
 
 	return gulp
 		.src(paths.test)
-		.pipe(jasmine({ verbose: true }))
+		.pipe(mocha({ reporter: 'spec' }))
 		.pipe(istanbul.writeReports());
 });

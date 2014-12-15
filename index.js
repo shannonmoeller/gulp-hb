@@ -13,6 +13,10 @@ function req(file) {
 }
 
 function _getFiles(list, src) {
+	if (!src) {
+		return list;
+	}
+
 	return list.concat(glob.sync(src));
 }
 
