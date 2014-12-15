@@ -1,15 +1,23 @@
 'use strict';
 
 var glob = require('glob'),
+	glob2base = require('glob2base'),
 	hb = require('handlebars'),
 	map = require('map-stream'),
 	mixIn = require('mout/object/mixIn'),
 	path = require('path');
 
 function req(file) {
-	file = path.join(process.cwd(), file);
-	delete require.cache[require.resolve(file)];
-	return require(file);
+	delete require.cache[require.resolve(file.path)];
+	return require(file.path);
+}
+
+function _makeFile(base, file) {
+	return {
+		base: base,
+		relative: path.relative(base, file),
+		path: path.join(process.cwd(), file)
+	};
 }
 
 function _getFiles(list, src) {
@@ -17,7 +25,11 @@ function _getFiles(list, src) {
 		return list;
 	}
 
-	return list.concat(glob.sync(src));
+	var matches = glob.Glob(src, { sync: true }),
+		base = glob2base(matches),
+		files = matches.found.map(_makeFile.bind(null, base));
+
+	return list.concat(files);
 }
 
 function getFiles(src) {
@@ -25,7 +37,10 @@ function getFiles(src) {
 }
 
 function getName(file) {
-	return path.basename(file).replace(path.extname(file), '');
+	var basename = path.basename(file.path, path.extname(file.path)),
+		dirname = path.dirname(file.relative);
+
+	return path.join(dirname, basename);
 }
 
 function registerData(data, file) {
@@ -88,9 +103,17 @@ module.exports = function (options) {
 		includeFile = true;
 	}
 
-	getFiles(options.data).reduce(registerData, data);
-	getFiles(options.helpers).reduce(registerHelper, hb);
-	getFiles(options.partials).reduce(registerPartial, hb);
+	if (options.data) {
+		getFiles(options.data).reduce(registerData, data);
+	}
+
+	if (options.helpers) {
+		getFiles(options.helpers).reduce(registerHelper, hb);
+	}
+
+	if (options.partials) {
+		getFiles(options.partials).reduce(registerPartial, hb);
+	}
 
 	return map(function (file, cb) {
 		var locals = Object.create(data),
