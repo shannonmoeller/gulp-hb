@@ -1,17 +1,12 @@
-# gulp-hb
+# `gulp-hb`
+
+[![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url]
 
 A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
-[![NPM version](https://badge.fury.io/js/gulp-hb.png)](http://badge.fury.io/js/gulp-hb)
-[![Build Status](https://travis-ci.org/shannonmoeller/gulp-hb.png?branch=master)](https://travis-ci.org/shannonmoeller/gulp-hb)
-[![Coverage Status](https://coveralls.io/repos/shannonmoeller/gulp-hb/badge.png?branch=master)](https://coveralls.io/r/shannonmoeller/gulp-hb?branch=master)
-[![Dependency Status](https://david-dm.org/shannonmoeller/gulp-hb.png?theme=shields.io)](https://david-dm.org/shannonmoeller/gulp-hb)
-
 ## Install
 
-With [Node.js](http://nodejs.org):
-
-    $ npm install gulp-hb
+    $ npm install --save-dev gulp-hb
 
 ## API
 
@@ -151,22 +146,32 @@ gulp.task('default', function () {
 });
 ```
 
-## Test
+## Contribute
 
-```
-$ npm test
-```
+[![Tasks][waffle-img]][waffle-url] [![Chat][gitter-img]][gitter-url] [![Tip][gittip-img]][gittip-url]
 
-## Compatibility
+Standards for this project, including tests, code coverage, and semantics are enforced with a build tool. Pull requests must include passing tests with 100% code coverage and no linting errors.
 
-Tested to work in the following environments:
+### Test
 
-- Node (0.10)
+    $ gulp test
 
-Using:
+----
 
-- [Travis](https://travis-ci.org/shannonmoeller/gulp-hb)
+© 2014 Shannon Moeller <me@shannonmoeller.com>
 
-## License
+Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 
-MIT
+[coveralls-img]: http://img.shields.io/coveralls/shannonmoeller/gulp-hb/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/shannonmoeller/gulp-hb
+[downloads-img]: http://img.shields.io/npm/dm/gulp-hb.svg?style=flat-square
+[gitter-img]:    http://img.shields.io/badge/chat-shannonmoeller/gulp-hb-blue.svg?style=flat-square
+[gitter-url]:    https://gitter.im/togajs/toga
+[gittip-img]:    http://img.shields.io/gittip/shannonmoeller.svg?style=flat-square
+[gittip-url]:    https://www.gittip.com/shannonmoeller
+[npm-img]:       http://img.shields.io/npm/v/gulp-hb.svg?style=flat-square
+[npm-url]:       https://npmjs.org/package/gulp-hb
+[travis-img]:    http://img.shields.io/travis/shannonmoeller/gulp-hb.svg?style=flat-square
+[travis-url]:    https://travis-ci.org/shannonmoeller/gulp-hb
+[waffle-img]:    http://img.shields.io/github/issues/shannonmoeller/gulp-hb.svg?style=flat-square
+[waffle-url]:    http://waffle.io/shannonmoeller/gulp-hb
