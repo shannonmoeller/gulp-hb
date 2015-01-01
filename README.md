@@ -85,7 +85,7 @@ module.exports.register = function (Handlebars) {
 
 ### `partials` _`String|Array.<String>`_
 
-Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
+Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more partials.
 
 As a standalone Handlebars file:
 
