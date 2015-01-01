@@ -157,7 +157,7 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 [coveralls-img]: http://img.shields.io/coveralls/shannonmoeller/gulp-hb/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/shannonmoeller/gulp-hb
 [downloads-img]: http://img.shields.io/npm/dm/gulp-hb.svg?style=flat-square
-[gitter-img]:    http://img.shields.io/badge/chat-shannonmoeller/gulp-hb-blue.svg?style=flat-square
+[gitter-img]:    http://img.shields.io/badge/chat-shannonmoeller/gulp--hb-blue.svg?style=flat-square
 [gitter-url]:    https://gitter.im/shannonmoeller/gulp-hb
 [gittip-img]:    http://img.shields.io/gittip/shannonmoeller.svg?style=flat-square
 [gittip-url]:    https://www.gittip.com/shannonmoeller
