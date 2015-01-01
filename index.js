@@ -1,129 +1,62 @@
 'use strict';
 
-var glob = require('glob'),
-	glob2base = require('glob2base'),
+var globs = require('globs'),
 	hb = require('handlebars'),
 	map = require('map-stream'),
-	mixIn = require('mout/object/mixIn'),
-	path = require('path');
+	mixin = require('mtil/object/mixin'),
+	registrar = require('handlebars-registrar');
 
-function req(file) {
-	delete require.cache[require.resolve(file.path)];
-	return require(file.path);
+function appendData(data, file) {
+	// Clear cached module, if any
+	delete require.cache[require.resolve(file)];
+
+	// Add object properties to data object
+	return mixin(data, require(file));
 }
 
-function _makeFile(base, file) {
-	return {
-		base: base,
-		relative: path.relative(base, file),
-		path: path.join(process.cwd(), file)
-	};
-}
-
-function _getFiles(list, src) {
-	if (!src) {
-		return list;
-	}
-
-	var matches = glob.Glob(src, { sync: true }),
-		base = glob2base(matches),
-		files = matches.found.map(_makeFile.bind(null, base));
-
-	return list.concat(files);
-}
-
-function getFiles(src) {
-	return [].concat(src).reduce(_getFiles, []);
-}
-
-function getName(file) {
-	var basename = path.basename(file.path, path.extname(file.path)),
-		dirname = path.dirname(file.relative);
-
-	return path.join(dirname, basename);
-}
-
-function registerData(data, file) {
-	return mixIn(data, req(file));
-}
-
-function registerHelper(hb, file) {
-	var helper = req(file),
-		name = getName(file);
-
-	if (!helper) {
-		return hb;
-	}
-
-	if (typeof helper.register === 'function') {
-		helper.register(hb);
-		return hb;
-	}
-
-	if (typeof helper === 'function') {
-		hb.registerHelper(name, helper);
-		return hb;
-	}
-
-	hb.registerHelper(helper);
-
-	return hb;
-}
-
-function registerPartial(hb, file) {
-	var partial = req(file),
-		name = getName(file);
-
-	if (!partial) {
-		return hb;
-	}
-
-	if (typeof partial.register === 'function') {
-		partial.register(hb);
-		return hb;
-	}
-
-	if (typeof partial === 'function') {
-		hb.registerPartial(name, partial);
-		return hb;
-	}
-
-	hb.registerPartial(partial);
-
-	return hb;
-}
-
+/**
+ * A sane static Handlebars Gulp plugin.
+ *
+ * @type {Function}
+ * @param {Object} options Plugin options.
+ * @param {String|Array.<String>} options.data One or more glob strings matching data files.
+ * @param {String|Array.<String>} options.helpers One or more glob strings matching helpers.
+ * @param {String|Array.<String>} options.partials One or more glob strings matching partials.
+ * @param {Boolean} options.file Whether to include the file object in the data passed to the template.
+ * @return {Stream}
+ */
 module.exports = function (options) {
 	options = options || {};
 
 	var data = {},
 		includeFile = options.file;
 
-	if (includeFile === undefined) {
+	// Default to true
+	if (includeFile == null) {
 		includeFile = true;
 	}
 
+	// Find and merge all of the data
 	if (options.data) {
-		getFiles(options.data).reduce(registerData, data);
+		globs.sync(options.data).reduce(appendData, data);
 	}
 
-	if (options.helpers) {
-		getFiles(options.helpers).reduce(registerHelper, hb);
-	}
+	// Find and register all of the helpers and partials
+	registrar(hb, {
+		helpers: options.helpers,
+		partials: options.partials
+	});
 
-	if (options.partials) {
-		getFiles(options.partials).reduce(registerPartial, hb);
-	}
-
+	// Stream it. Stream it good
 	return map(function (file, cb) {
-		var locals = Object.create(data),
+		var context = Object.create(data),
 			template = hb.compile(file.contents.toString());
 
 		if (includeFile) {
-			locals.file = file;
+			context.file = file;
 		}
 
-		file.contents = new Buffer(template(locals));
+		file.contents = new Buffer(template(context));
 
 		cb(null, file);
 	});

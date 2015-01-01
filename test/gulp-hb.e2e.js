@@ -4,84 +4,92 @@ var hb = require('../index'),
 	expect = require('expect.js'),
 	map = require('map-stream'),
 	fs = require('fs'),
-	vs = require('vinyl-fs');
+	vs = require('vinyl-fs'),
 
-describe('hb e2e', function () {
+	config = {
+		data: __dirname + '/fixtures/data/**/*.{js,json}',
+		helpers: __dirname + '/fixtures/helpers/**/*.js',
+		partials: __dirname + '/fixtures/partials/**/*.hbs',
+		templates: __dirname + '/fixtures/templates/'
+	};
+
+describe('gulp-hb e2e', function () {
 	var count;
 
 	function toEqualExpected(file, cb) {
 		count++;
 
-		var expected = file.path.replace('fixtures', 'expected');
+		var expected = file.path.replace('fixtures\/templates', 'expected');
 		expect(file.contents.toString()).to.be(fs.readFileSync(expected, 'utf8'));
 		cb(null, file);
 	}
 
-	it('should render handlebars files', function (done) {
+	beforeEach(function () {
 		count = 0;
+	});
 
-		vs.src(__dirname + '/simple/fixtures/**/*.html')
+	it('should render handlebars files', function (done) {
+		vs.src(config.templates + 'none.html')
 			.pipe(hb())
 			.pipe(map(toEqualExpected))
 			.on('error', done)
 			.on('end', function () {
-				expect(count).to.be(0);
+				expect(count).to.be(1);
 				done();
 			});
 	});
 
 	it('should render handlebars files with data', function (done) {
-		count = 0;
-
-		vs.src(__dirname + '/data/fixtures/**/*.html')
-			.pipe(hb({ data: '' }))
+		vs.src(config.templates + 'data.html')
+			.pipe(hb({
+				data: config.data
+			}))
 			.pipe(map(toEqualExpected))
 			.on('error', done)
 			.on('end', function () {
-				expect(count).to.be(0);
+				expect(count).to.be(1);
 				done();
 			});
 	});
 
 	it('should render handlebars files with helpers', function (done) {
-		count = 0;
-
-		vs.src(__dirname + '/helpers/fixtures/**/*.html')
-			.pipe(hb({ helpers: '' }))
+		vs.src(config.templates + 'helpers.html')
+			.pipe(hb({
+				helpers: config.helpers
+			}))
 			.pipe(map(toEqualExpected))
 			.on('error', done)
 			.on('end', function () {
-				expect(count).to.be(0);
+				expect(count).to.be(1);
 				done();
 			});
 	});
 
 	it('should render handlebars files with partials', function (done) {
-		count = 0;
-
-		vs.src(__dirname + '/partials/fixtures/**/*.html')
-			.pipe(hb({ partials: '' }))
+		vs.src(config.templates + 'partials.html')
+			.pipe(hb({
+				partials: config.partials
+			}))
 			.pipe(map(toEqualExpected))
 			.on('error', done)
 			.on('end', function () {
-				expect(count).to.be(0);
+				expect(count).to.be(1);
 				done();
 			});
 	});
 
 	it('should render handlebars files with all the things', function (done) {
-		count = 0;
-
-		vs.src(__dirname + '/all/fixtures/**/*.html')
+		vs.src(config.templates + 'all.html')
 			.pipe(hb({
-				data: '',
-				helpers: '',
-				partials: ''
+				file: false,
+				data: config.data,
+				helpers: config.helpers,
+				partials: config.partials
 			}))
 			.pipe(map(toEqualExpected))
 			.on('error', done)
 			.on('end', function () {
-				expect(count).to.be(0);
+				expect(count).to.be(1);
 				done();
 			});
 	});

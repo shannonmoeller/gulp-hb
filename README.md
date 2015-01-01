@@ -94,14 +94,6 @@ As a standalone Handlebars file:
 <a href="{{url}}">{{text}}</a>
 ```
 
-As a precompiled partials JavaScript file:
-
-```js
-// partials.js
-var Handlebars = ...
-templates['link'] = template({...
-```
-
 As an object of partials:
 
 ```js
