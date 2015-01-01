@@ -4,9 +4,12 @@ var globs = require('globs'),
 	hb = require('handlebars'),
 	map = require('map-stream'),
 	mixin = require('mtil/object/mixin'),
+	path = require('path'),
 	registrar = require('handlebars-registrar');
 
 function appendData(data, file) {
+	file = path.resolve(process.cwd(), file);
+
 	// Clear cached module, if any
 	delete require.cache[require.resolve(file)];
 
