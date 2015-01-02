@@ -10,6 +10,30 @@ For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
 
     $ npm install --save-dev gulp-hb
 
+## Example
+
+```js
+var gulp = require('gulp');
+var hb = require('gulp-hb');
+
+gulp.task('default', function () {
+    return gulp
+        .src('./src/{,posts/}*.html')
+        .pipe(hb({
+            data: './src/assets/data/**/*.{js,json}',
+            helpers: [
+                './node_modules/handlebars-layouts',
+                './node_modules/handlebars-helpers/lib/helpers/helpers-{dates,math}.js'
+                './src/assets/helpers/*.js'
+            ],
+            partials: [
+                './src/assets/partials/**/*.hbs'
+            ]
+        }))
+        .pipe(gulp.dest('./web/'));
+});
+```
+
 ## API
 
 ### `hb([options])`
@@ -18,11 +42,11 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 ## Options
 
-### `data` _`String|Array.<String>`_
+### `data` `{String|Array.<String>}`
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
 
-### `file` _`Boolean`_ (default: true)
+### `file` `{Boolean}` (default: true)
 
 Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) for example.
 
@@ -46,7 +70,7 @@ title: Hello World
 <h1>{{file.frontMatter.title}}</h1>
 ```
 
-### `helpers` _`String|Array.<String>`_
+### `helpers` `{String|Array.<String>}`
 
 Glob string or array of glob strings matching helper files. Helper files are JavaScript files that define one or more helpers.
 
@@ -85,7 +109,7 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
-### `partials` _`String|Array.<String>`_
+### `partials` `{String|Array.<String>}`
 
 Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more partials.
 
@@ -114,30 +138,6 @@ module.exports.register = function (Handlebars) {
     Handlebars.registerPartial('link', '<a href="{{url}}">{{text}}</a>');
     Handlebars.registerPartial('people', '<ul>{{#people}}<li>{{> link}}</li>{{/people}}</ul>');
 };
-```
-
-## Example
-
-```js
-var gulp = require('gulp');
-var hb = require('gulp-hb');
-
-gulp.task('default', function () {
-    return gulp
-        .src('./src/{,posts/}*.html')
-        .pipe(hb({
-            data: './src/assets/data/**/*.{js,json}',
-            helpers: [
-                './node_modules/handlebars-layouts',
-                './node_modules/handlebars-helpers/lib/helpers/helpers-{dates,math}.js'
-                './src/assets/helpers/*.js'
-            ],
-            partials: [
-                './src/assets/partials/**/*.hbs'
-            ]
-        }))
-        .pipe(gulp.dest('./web/'));
-});
 ```
 
 ## Contribute
