@@ -4,6 +4,7 @@
   "description": "A sane Handlebars Gulp plugin.",
   "keywords": [
     "gulp",
+	"gulpplugin",
     "hb",
     "hbs",
     "hbt",
@@ -20,7 +21,7 @@
     "url": "https://github.com/shannonmoeller/gulp-hb.git"
   },
   "scripts": {
-    "coveralls": "gulp cover && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test": "gulp test"
   },
   "dependencies": {
