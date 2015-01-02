@@ -116,7 +116,7 @@ Glob string or array of glob strings matching partial files. Partial files are e
 As a standalone Handlebars file:
 
 ```handlebars
-{{! link.hbs }}
+{{!-- link.hbs --}}
 <a href="{{url}}">{{text}}</a>
 ```
 
