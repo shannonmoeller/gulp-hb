@@ -22,7 +22,7 @@ gulp.task('default', function () {
         .pipe(hb({
             data: './src/assets/data/**/*.{js,json}',
             helpers: [
-                './node_modules/handlebars-layouts',
+                './node_modules/handlebars-layouts/index.js',
                 './node_modules/handlebars-helpers/lib/helpers/helpers-{dates,math}.js'
                 './src/assets/helpers/*.js'
             ],
