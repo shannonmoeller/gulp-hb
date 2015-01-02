@@ -83,6 +83,8 @@ module.exports = function (text) {
 };
 ```
 
+When registering an unnamed helper, the helper will be named according to the file path and name without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks).
+
 As an object of helper functions:
 
 ```js
@@ -119,6 +121,8 @@ As a standalone Handlebars file:
 {{!-- link.hbs --}}
 <a href="{{url}}">{{text}}</a>
 ```
+
+When registering an unnamed partial, the partial will be named according to the file path and name without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`.
 
 As an object of partials:
 
