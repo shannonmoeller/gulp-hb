@@ -4,6 +4,8 @@
 
 A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
+For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
+
 ## Install
 
     $ npm install --save-dev gulp-hb
