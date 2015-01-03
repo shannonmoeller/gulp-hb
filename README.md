@@ -13,8 +13,8 @@ For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
 ## Example
 
 ```js
-var gulp = require('gulp');
-var hb = require('gulp-hb');
+var gulp = require('gulp'),
+    hb = require('gulp-hb');
 
 gulp.task('default', function () {
     return gulp
