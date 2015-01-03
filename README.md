@@ -46,7 +46,7 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
 
-### `file` `{Boolean}` (default: true)
+### `file` `{Boolean}` (default: `true`)
 
 Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) for example.
 
