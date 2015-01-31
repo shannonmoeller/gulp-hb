@@ -1,6 +1,6 @@
 # `gulp-hb`
 
-[![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url]
+[![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Chat][gitter-img]][gitter-url]
 
 A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
@@ -146,7 +146,7 @@ module.exports.register = function (Handlebars) {
 
 ## Contribute
 
-[![Tasks][waffle-img]][waffle-url] [![Chat][gitter-img]][gitter-url] [![Tip][gittip-img]][gittip-url]
+[![Tasks][waffle-img]][waffle-url] [![Tip][gittip-img]][gittip-url]
 
 Standards for this project, including tests, code coverage, and semantics are enforced with a build tool. Pull requests must include passing tests with 100% code coverage and no linting errors.
 
@@ -163,7 +163,7 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 [coveralls-img]: http://img.shields.io/coveralls/shannonmoeller/gulp-hb/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/shannonmoeller/gulp-hb
 [downloads-img]: http://img.shields.io/npm/dm/gulp-hb.svg?style=flat-square
-[gitter-img]:    http://img.shields.io/badge/chat-shannonmoeller/gulp--hb-blue.svg?style=flat-square
+[gitter-img]:    http://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat-square
 [gitter-url]:    https://gitter.im/shannonmoeller/gulp-hb
 [gittip-img]:    http://img.shields.io/gittip/shannonmoeller.svg?style=flat-square
 [gittip-url]:    https://www.gittip.com/shannonmoeller
