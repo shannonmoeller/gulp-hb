@@ -42,6 +42,10 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 ## Options
 
+### `cwd` `{String}`
+
+Current working directory. Defaults to `process.cwd()`.
+
 ### `data` `{String|Array.<String>}`
 
 Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.

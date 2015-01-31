@@ -1,6 +1,6 @@
 {
   "name": "gulp-hb",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "A sane Handlebars Gulp plugin.",
   "keywords": [
     "gulp",
@@ -27,7 +27,7 @@
   "dependencies": {
     "globby": "^1.1.0",
     "handlebars": "^2.0.0",
-    "handlebars-registrar": "^1.0.3",
+    "handlebars-registrar": "^1.1.0",
     "map-stream": "0.0.5",
     "mtil": "^0.1.3"
   },
