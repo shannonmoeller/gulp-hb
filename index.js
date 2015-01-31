@@ -1,6 +1,6 @@
 'use strict';
 
-var globs = require('globs'),
+var glob = require('globby'),
 	hb = require('handlebars'),
 	map = require('map-stream'),
 	mixin = require('mtil/object/mixin'),
@@ -39,12 +39,12 @@ module.exports = function (options) {
 		includeFile = true;
 	}
 
-	// Find and merge all of the data
+	// Find and merge all data
 	if (options.data) {
-		globs.sync(options.data).reduce(appendData, data);
+		glob.sync(options.data).reduce(appendData, data);
 	}
 
-	// Find and register all of the helpers and partials
+	// Find and register all helpers and partials
 	registrar(hb, {
 		helpers: options.helpers,
 		partials: options.partials
