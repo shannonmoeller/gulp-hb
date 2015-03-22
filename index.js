@@ -1,21 +1,10 @@
 'use strict';
 
-var glob = require('globby'),
-	hb = require('handlebars'),
+var hb = require('handlebars'),
 	map = require('map-stream'),
-	mixin = require('mtil/object/mixin'),
 	path = require('path'),
-	registrar = require('handlebars-registrar');
-
-function appendData(data, file) {
-	file = path.resolve(process.cwd(), file);
-
-	// Clear cached module, if any
-	delete require.cache[require.resolve(file)];
-
-	// Add object properties to data object
-	return mixin(data, require(file));
-}
+	registrar = require('handlebars-registrar'),
+	requireGlob = require('require-glob');
 
 /**
  * A sane static Handlebars Gulp plugin.
@@ -32,7 +21,7 @@ function appendData(data, file) {
 module.exports = function (options) {
 	options = options || {};
 
-	var data = {},
+	var data,
 		cwd = options.cwd || process.cwd(),
 		includeFile = options.file;
 
@@ -43,7 +32,9 @@ module.exports = function (options) {
 
 	// Find and merge all data
 	if (options.data) {
-		glob.sync(options.data, { cwd: cwd }).reduce(appendData, data);
+		data = requireGlob.sync(options.data, {
+			cwd: cwd
+		});
 	}
 
 	// Find and register all helpers and partials
@@ -55,7 +46,7 @@ module.exports = function (options) {
 
 	// Stream it. Stream it good.
 	return map(function (file, cb) {
-		var context = Object.create(data),
+		var context = Object.create(data || {}),
 			template = hb.compile(file.contents.toString());
 
 		if (includeFile) {
