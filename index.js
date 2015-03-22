@@ -2,7 +2,6 @@
 
 var hb = require('handlebars'),
 	map = require('map-stream'),
-	path = require('path'),
 	registrar = require('handlebars-registrar'),
 	requireGlob = require('require-glob');
 
