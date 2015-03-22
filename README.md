@@ -4,7 +4,7 @@
 
 A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
-For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
+For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb). To precompile templates into JavaScript, see [gulp-handlebars](https://github.com/lazd/gulp-handlebars).
 
 ## Install
 
