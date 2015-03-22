@@ -52,7 +52,7 @@ Glob string or array of glob strings matching data files. You can't use object l
 
 ### `file` `{Boolean}` (default: `true`)
 
-Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) for example.
+Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
 
 ```js
 var gulp = require('gulp'),
