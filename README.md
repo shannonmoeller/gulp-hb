@@ -48,11 +48,15 @@ Current working directory. Defaults to `process.cwd()`.
 
 ### `data` `{String|Array.<String>}`
 
-Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
+Glob string or array of glob strings matching data files. Use the context property if you like touse object literals here.
+
+### `context` `{Object}`
+
+If you need to put object directly into the handlebar context you can use the context object.
 
 ### `file` `{Boolean}` (default: `true`)
 
-Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
+Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example. If you're using `context` the default value is set to false, since it would otherwise potentially overwrite a file property in the context object.
 
 ```js
 var gulp = require('gulp'),

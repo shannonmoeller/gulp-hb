@@ -24,8 +24,8 @@ module.exports = function (options) {
 		cwd = options.cwd || process.cwd(),
 		includeFile = options.file;
 
-	// Pass file data to handlebars by default
-	if (includeFile == null) {
+	// Pass file data to handlebars by default if context isnt set
+	if (includeFile == null && options.context == null) {
 		includeFile = true;
 	}
 
@@ -45,7 +45,7 @@ module.exports = function (options) {
 
 	// Stream it. Stream it good.
 	return map(function (file, cb) {
-		var context = Object.create(data || {}),
+		var context = options.context || Object.create(data || {}),
 			template = hb.compile(file.contents.toString());
 
 		if (includeFile) {

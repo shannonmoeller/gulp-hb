@@ -39,6 +39,19 @@ describe('gulp-hb e2e', function () {
 			});
 	});
 
+	it('should render handlebars files with explicit context', function (done) {
+		vs.src(config.templates + 'data.html')
+			.pipe(hb({
+				context: { foo: { title: 'Foo' }, bar: { title: 'Bar' } }
+			}))
+			.pipe(map(toEqualExpected))
+			.on('error', done)
+			.on('end', function () {
+				expect(count).to.be(1);
+				done();
+			});
+	});
+
 	it('should render handlebars files with data', function (done) {
 		vs.src(config.templates + 'data.html')
 			.pipe(hb({
