@@ -48,7 +48,7 @@ Current working directory. Defaults to `process.cwd()`.
 
 ### `data` `{String|Array.<String>|Object|Function}`
 
-An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed files are merged into an object structure which mirrors the directory structure and file names.
+An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
 
 ### `file` `{Boolean}` (default: `true`)
 
