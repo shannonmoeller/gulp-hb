@@ -46,7 +46,7 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 Current working directory. Defaults to `process.cwd()`.
 
-### `data` `{String|Array.<String>|Object|Function}`
+### `data` `{Object|String|Array.<String>|Function}`
 
 An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
 
@@ -78,7 +78,7 @@ title: Hello World
 <h1>{{file.frontMatter.title}}</h1>
 ```
 
-### `helpers` `{String|Array.<String>|Object|Function}`
+### `helpers` `{Object|String|Array.<String>|Function}`
 
 An [object of helpers](http://handlebarsjs.com/reference.html#base-registerHelper), a glob string matching helper files, an array of glob strings, or a function returning any of these. Globbed helper files are JavaScript files that define one or more helpers.
 
@@ -119,7 +119,7 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
-### `partials` `{String|Array.<String>|Object|Function}`
+### `partials` `{Object|String|Array.<String>|Function}`
 
 An [object of partials](http://handlebarsjs.com/reference.html#base-registerPartial), a glob string matching partial files, an array of glob strings, or a function returning any of these. Globbed partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
 
