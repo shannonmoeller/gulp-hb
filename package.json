@@ -1,15 +1,16 @@
 {
   "name": "gulp-hb",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A sane Handlebars Gulp plugin.",
   "keywords": [
+    "handlebars",
+    "hbs",
     "gulp",
     "gulpplugin",
-    "hb",
-    "hbs",
-    "hbt",
-    "handlebars",
-    "static"
+    "compile",
+    "render",
+    "static",
+    "hbt"
   ],
   "homepage": "https://github.com/shannonmoeller/gulp-hb",
   "bugs": "https://github.com/shannonmoeller/gulp-hb/issues",
@@ -25,19 +26,19 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "handlebars": "^3.0.0",
-    "handlebars-registrar": "^1.1.1",
+    "handlebars": "^3.0.1",
+    "handlebars-registrar": "^1.2.0",
     "map-stream": "0.0.5",
-    "require-glob": "^1.0.0"
+    "require-glob": "^1.1.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
     "expect.js": "^0.3.1",
     "gulp": "^3.8.11",
-    "gulp-istanbul": "^0.6.0",
-    "gulp-jscs": "^1.4.0",
-    "gulp-jshint": "^1.9.4",
-    "gulp-mocha": "^2.0.0",
+    "gulp-istanbul": "^0.8.1",
+    "gulp-jscs": "^1.5.1",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
     "jshint-stylish": "^1.0.1",
     "vinyl-fs": "^1.0.0"
   },
