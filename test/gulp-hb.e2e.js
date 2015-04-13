@@ -145,4 +145,31 @@ describe('gulp-hb e2e', function () {
 				done();
 			});
 	});
+
+	it('should allow context to be modified on a per-file basis', function (done) {
+		vs.src(config.templates + 'dataEach.html')
+			.pipe(hb({
+				data: config.data,
+				helpers: config.helpers,
+				partials: config.partials,
+				dataEach: function (context, file) {
+					count++;
+
+					expect(context.file).to.be(file);
+					expect(context.foo.title).to.be('Foo');
+
+					context.bar = {
+						title: 'Qux'
+					};
+
+					return context;
+				}
+			}))
+			.pipe(map(toEqualExpected))
+			.on('error', done)
+			.on('end', function () {
+				expect(count).to.be(2);
+				done();
+			});
+	});
 });

@@ -50,6 +50,10 @@ Current working directory. Defaults to `process.cwd()`.
 
 An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
 
+### `dataEach` `{Function(Object,Vinyl):Object}`
+
+A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis.
+
 ### `file` `{Boolean}` (default: `true`)
 
 Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
