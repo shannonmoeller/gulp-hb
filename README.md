@@ -16,6 +16,8 @@ For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb). To precom
 var gulp = require('gulp'),
     hb = require('gulp-hb');
 
+// Using globs
+
 gulp.task('default', function () {
     return gulp
         .src('./src/{,posts/}*.html')
@@ -29,6 +31,27 @@ gulp.task('default', function () {
             partials: [
                 './src/assets/partials/**/*.hbs'
             ]
+        }))
+        .pipe(gulp.dest('./web/'));
+});
+
+// Using object literals
+
+gulp.task('default', function () {
+    return gulp
+        .src('./src/{,posts/}*.html')
+        .pipe(hb({
+            data: {
+                pkg: require('./package.json'),
+                site: require('./src/assets/data/site.json')
+            },
+            helpers: {
+                lower: require('./src/assets/helpers/lower'),
+                upper: require('./src/assets/helpers/upper')
+            },
+            partials: {
+                layout: require('./src/assets/partials/layout.hbs')
+            }
         }))
         .pipe(gulp.dest('./web/'));
 });
