@@ -16,6 +16,7 @@ var hb = require('handlebars'),
  * @param {Object|String|Array.<String>|Function} options.helpers One or more glob strings matching helpers.
  * @param {Object|String|Array.<String>|Function} options.partials One or more glob strings matching partials.
  * @param {Boolean} options.file Whether to include the file object in the data passed to the template.
+ * @param {Boolean} options.continueOnError Whether to continue streaming when an error occurs and emitting a "failure" event.
  * @return {Stream}
  */
 module.exports = function (options) {
@@ -60,5 +61,7 @@ module.exports = function (options) {
 		file.contents = new Buffer(template(context));
 
 		cb(null, file);
+	}, {
+		failures: options.continueOnError
 	});
 };

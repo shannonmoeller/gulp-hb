@@ -175,6 +175,10 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
+### `continueOnError` `{Boolean}` (default: `false`)
+
+Whether to continue streaming when an error occurs and emitting a `failure` event. See https://github.com/dominictarr/map-stream#options
+
 ## Contribute
 
 [![Tasks][waffle-img]][waffle-url] [![Tip][gittip-img]][gittip-url]
