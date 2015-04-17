@@ -1,3 +1,9 @@
+## 2.1.1
+
+Bufixes:
+
+- Updated `require-glob` to latest version to improve default handling of data property names.
+
 ## 2.0.0
 
 Breaking changes:

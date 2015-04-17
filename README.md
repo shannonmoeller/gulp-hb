@@ -4,7 +4,7 @@
 
 A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
 
-For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
+For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb). To precompile templates into JavaScript, see [gulp-handlebars](https://github.com/lazd/gulp-handlebars).
 
 ## Install
 
@@ -15,6 +15,8 @@ For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb).
 ```js
 var gulp = require('gulp'),
     hb = require('gulp-hb');
+
+// Using globs
 
 gulp.task('default', function () {
     return gulp
@@ -32,6 +34,27 @@ gulp.task('default', function () {
         }))
         .pipe(gulp.dest('./web/'));
 });
+
+// Using object literals
+
+gulp.task('default', function () {
+    return gulp
+        .src('./src/{,posts/}*.html')
+        .pipe(hb({
+            data: {
+                pkg: require('./package.json'),
+                site: require('./src/assets/data/site.json')
+            },
+            helpers: {
+                lower: require('./src/assets/helpers/lower'),
+                upper: require('./src/assets/helpers/upper')
+            },
+            partials: {
+                layout: require('./src/assets/partials/layout.hbs')
+            }
+        }))
+        .pipe(gulp.dest('./web/'));
+});
 ```
 
 ## API
@@ -46,13 +69,17 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 Current working directory. Defaults to `process.cwd()`.
 
-### `data` `{String|Array.<String>}`
+### `data` `{Object|String|Array.<String>|Function}`
 
-Glob string or array of glob strings matching data files. You can't use object literals here. Because, don't.
+An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
+
+### `dataEach` `{Function(Object,Vinyl):Object}`
+
+A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis.
 
 ### `file` `{Boolean}` (default: `true`)
 
-Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) for example.
+Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
 
 ```js
 var gulp = require('gulp'),
@@ -74,9 +101,9 @@ title: Hello World
 <h1>{{file.frontMatter.title}}</h1>
 ```
 
-### `helpers` `{String|Array.<String>}`
+### `helpers` `{Object|String|Array.<String>|Function}`
 
-Glob string or array of glob strings matching helper files. Helper files are JavaScript files that define one or more helpers.
+An [object of helpers](http://handlebarsjs.com/reference.html#base-registerHelper), a glob string matching helper files, an array of glob strings, or a function returning any of these. Globbed helper files are JavaScript files that define one or more helpers.
 
 As a single helper function (helper will be named according to the filename):
 
@@ -115,9 +142,9 @@ module.exports.register = function (Handlebars) {
 };
 ```
 
-### `partials` `{String|Array.<String>}`
+### `partials` `{Object|String|Array.<String>|Function}`
 
-Glob string or array of glob strings matching partial files. Partial files are either standalone Handlebars files, or JavaScript files that define one or more partials.
+An [object of partials](http://handlebarsjs.com/reference.html#base-registerPartial), a glob string matching partial files, an array of glob strings, or a function returning any of these. Globbed partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
 
 As a standalone Handlebars file:
 

@@ -93,4 +93,83 @@ describe('gulp-hb e2e', function () {
 				done();
 			});
 	});
+
+	it('should render handlebars files with object options', function (done) {
+		vs.src(config.templates + 'objects.html')
+			.pipe(hb({
+				file: false,
+				data: {
+					foo: require('./fixtures/data/foo'),
+					bar: require('./fixtures/data/bar.json'),
+					users: require('./fixtures/data/users.json')
+				},
+				helpers: {
+					lower: require('./fixtures/helpers/lower'),
+					upper: require('./fixtures/helpers/upper'),
+					'flow-when': require('./fixtures/helpers/flow/when')
+				},
+				partials: {
+					'components/item': require('./fixtures/partials/components/item.hbs')
+				}
+			}))
+			.pipe(map(toEqualExpected))
+			.on('error', done)
+			.on('end', function () {
+				expect(count).to.be(1);
+				done();
+			});
+	});
+
+	it('should render handlebars files with function options', function (done) {
+		vs.src(config.templates + 'functions.html')
+			.pipe(hb({
+				file: false,
+				data: function () {
+					return config.data;
+				},
+				helpers: function () {
+					return {
+						lower: require('./fixtures/helpers/lower'),
+						upper: require('./fixtures/helpers/upper'),
+						'flow-when': require('./fixtures/helpers/flow/when')
+					};
+				},
+				partials: function () {
+					return config.partials;
+				}
+			}))
+			.pipe(map(toEqualExpected))
+			.on('error', done)
+			.on('end', function () {
+				expect(count).to.be(1);
+				done();
+			});
+	});
+
+	it('should allow context to be modified on a per-file basis', function (done) {
+		vs.src(config.templates + 'dataEach.html')
+			.pipe(hb({
+				data: config.data,
+				helpers: config.helpers,
+				partials: config.partials,
+				dataEach: function (context, file) {
+					count++;
+
+					expect(context.file).to.be(file);
+					expect(context.foo.title).to.be('Foo');
+
+					context.bar = {
+						title: 'Qux'
+					};
+
+					return context;
+				}
+			}))
+			.pipe(map(toEqualExpected))
+			.on('error', done)
+			.on('end', function () {
+				expect(count).to.be(2);
+				done();
+			});
+	});
 });

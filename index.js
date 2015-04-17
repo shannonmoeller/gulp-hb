@@ -2,7 +2,6 @@
 
 var hb = require('handlebars'),
 	map = require('map-stream'),
-	path = require('path'),
 	registrar = require('handlebars-registrar'),
 	requireGlob = require('require-glob');
 
@@ -12,9 +11,10 @@ var hb = require('handlebars'),
  * @type {Function}
  * @param {Object} options Plugin options.
  * @param {String} options.cwd Current working directory. Defaults to `process.cwd()`.
- * @param {String|Array.<String>} options.data One or more glob strings matching data files.
- * @param {String|Array.<String>} options.helpers One or more glob strings matching helpers.
- * @param {String|Array.<String>} options.partials One or more glob strings matching partials.
+ * @param {Object|String|Array.<String>|Function} options.data One or more glob strings matching data files.
+ * @param {Function(Object,Vinyl):Object} options.dataEach Pre-render hook to modify the context on a per-file basis.
+ * @param {Object|String|Array.<String>|Function} options.helpers One or more glob strings matching helpers.
+ * @param {Object|String|Array.<String>|Function} options.partials One or more glob strings matching partials.
  * @param {Boolean} options.file Whether to include the file object in the data passed to the template.
  * @return {Stream}
  */
@@ -51,6 +51,10 @@ module.exports = function (options) {
 
 		if (includeFile) {
 			context.file = file;
+		}
+
+		if (typeof options.dataEach === 'function') {
+			context = options.dataEach(context, file);
 		}
 
 		file.contents = new Buffer(template(context));
