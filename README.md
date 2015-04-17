@@ -16,42 +16,13 @@ For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb). To precom
 var gulp = require('gulp'),
     hb = require('gulp-hb');
 
-// Using globs
-
 gulp.task('default', function () {
     return gulp
         .src('./src/{,posts/}*.html')
         .pipe(hb({
             data: './src/assets/data/**/*.{js,json}',
-            helpers: [
-                './node_modules/handlebars-layouts/index.js',
-                './node_modules/handlebars-helpers/lib/helpers/helpers-{dates,math}.js'
-                './src/assets/helpers/*.js'
-            ],
-            partials: [
-                './src/assets/partials/**/*.hbs'
-            ]
-        }))
-        .pipe(gulp.dest('./web/'));
-});
-
-// Using object literals
-
-gulp.task('default', function () {
-    return gulp
-        .src('./src/{,posts/}*.html')
-        .pipe(hb({
-            data: {
-                pkg: require('./package.json'),
-                site: require('./src/assets/data/site.json')
-            },
-            helpers: {
-                lower: require('./src/assets/helpers/lower'),
-                upper: require('./src/assets/helpers/upper')
-            },
-            partials: {
-                layout: require('./src/assets/partials/layout.hbs')
-            }
+            helpers: './src/assets/helpers/*.js',
+            partials: './src/assets/partials/**/*.hbs'
         }))
         .pipe(gulp.dest('./web/'));
 });
@@ -73,9 +44,38 @@ Current working directory. Defaults to `process.cwd()`.
 
 An object literal, a glob string matching data files, an array of glob strings, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
 
+```js
+data: {
+    pkg: require('./package.json'),
+    foo: 'bar'
+}
+```
+
+```js
+data: './src/assets/data/**/*.{js,json}'
+```
+
+```js
+data: [
+    './src/assets/data/**/*.js'
+    './src/assets/data/**/*.json'
+]
+```
+
 ### `dataEach` `{Function(Object,Vinyl):Object}`
 
 A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis.
+
+```js
+dataEach: function (context, file) {
+    context.foo = bar;
+    return context;
+}
+```
+
+### `debug` `{Boolean}` (default: `false`)
+
+Whether to log the helper names, partial names, and root property names for each file being rendered.
 
 ### `file` `{Boolean}` (default: `true`)
 
