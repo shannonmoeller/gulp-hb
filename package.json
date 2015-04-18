@@ -33,8 +33,8 @@
   "dependencies": {
     "gulp-util": "^3.0.4",
     "handlebars": "^3.0.1",
-    "handlebars-registrar": "^1.2.0",
-    "require-glob": "^1.1.1",
+    "handlebars-registrar": "^1.3.1",
+    "require-glob": "^1.2.0",
     "through2": "^0.6.5"
   },
   "devDependencies": {

@@ -36,6 +36,10 @@ Returns a Gulp-compatible transform stream that compiles handlebars templates to
 
 ## Options
 
+### `bustCache` `{Boolean}` (default: `false`)
+
+Whether to force a reload of data, helpers, and partials by deleting them from the cache. Useful inside watch tasks.
+
 ### `cwd` `{String}`
 
 Current working directory. Defaults to `process.cwd()`.
@@ -118,8 +122,13 @@ helpers: [
 
 ```js
 helpers: {
-    lower: function () { ... },
-    upper: function () { ... }
+    lower: function (text) {
+        return String(text).toLowerCase();
+    },
+
+    upper: function (text) {
+        return String(text).toUpperCase();
+    }
 }
 ```
 
