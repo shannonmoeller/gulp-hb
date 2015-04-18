@@ -123,7 +123,7 @@ helpers: {
 }
 ```
 
-When including helpers using globs, modules may export a single helper function. The helper will be named according to the file path and name without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks).
+When including helpers using globs, modules may export a single helper function. Each helper will be named according to the file path and name without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks).
 
 ```js
 // lower.js
@@ -169,7 +169,7 @@ partials: {
 }
 ```
 
-When including paritals using globs, partials may be handlebars file. The partial will be named according to the file path and name without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`.
+When including paritals using globs, partials may be standalone handlebars files. Each partial will be named according to the file path and name without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`.
 
 ```handlebars
 {{!-- link.hbs --}}
