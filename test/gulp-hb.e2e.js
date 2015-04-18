@@ -114,7 +114,7 @@ describe('gulp-hb e2e', function () {
 			}
 		};
 
-		testWithFile('objects.html', hb(options), done);
+		testWithFile('functions.html', hb(options), done);
 	});
 
 	it('should allow context to be modified on a per-file basis', function (done) {
