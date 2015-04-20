@@ -1,6 +1,7 @@
 'use strict';
 
-var hb = require('handlebars'),
+var gutil = require('gulp-util'),
+	hb = require('handlebars'),
 	logger = require('./util/logger'),
 	registrar = require('handlebars-registrar'),
 	requireGlob = require('require-glob'),
@@ -58,27 +59,32 @@ module.exports = function (options) {
 
 	// Stream it. Stream it good.
 	return through.obj(function (file, enc, cb) {
-		var context = Object.create(data || {}),
-			template = hb.compile(file.contents.toString());
+		try {
+			var context = Object.create(data || {}),
+				template = hb.compile(file.contents.toString());
 
-		if (includeFile) {
-			context.file = file;
+			if (includeFile) {
+				context.file = file;
+			}
+
+			if (typeof options.dataEach === 'function') {
+				context = options.dataEach(context, file);
+			}
+
+			if (options.debug) {
+				logger.file(file.path.replace(file.base, ''));
+				logger.keys('     data', data);
+				logger.keys('  context', context);
+				logger.keys('  helpers', hb.helpers);
+				logger.keys(' partials', hb.partials);
+			}
+
+			file.contents = new Buffer(template(context));
+
+			cb(null, file);
 		}
-
-		if (typeof options.dataEach === 'function') {
-			context = options.dataEach(context, file);
+		catch (err) {
+			cb(new gutil.PluginError('gulp-hb', err));
 		}
-
-		if (options.debug) {
-			logger.file(file.path.replace(file.base, ''));
-			logger.keys('     data', data);
-			logger.keys('  context', context);
-			logger.keys('  helpers', hb.helpers);
-			logger.keys(' partials', hb.partials);
-		}
-
-		file.contents = new Buffer(template(context));
-
-		cb(null, file);
 	});
 };

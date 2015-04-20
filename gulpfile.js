@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
+	plumber = require('gulp-plumber'),
 	paths = {
 		gulp: './gulpfile.js',
 		src: './index.js',
@@ -15,6 +16,7 @@ gulp.task('lint', function () {
 
 	return gulp
 		.src([paths.gulp, paths.src, paths.test])
+		.pipe(plumber())
 		.pipe(jscs())
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'));
@@ -35,6 +37,11 @@ gulp.task('test', ['lint', 'cover'], function () {
 
 	return gulp
 		.src(paths.test)
+		.pipe(plumber())
 		.pipe(mocha({ reporter: 'spec' }))
 		.pipe(istanbul.writeReports());
+});
+
+gulp.task('watch', function () {
+	gulp.watch([paths.src, paths.test], ['test']);
 });

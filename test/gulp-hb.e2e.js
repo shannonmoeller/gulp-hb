@@ -23,11 +23,17 @@ describe('gulp-hb e2e', function () {
 			done();
 		}
 
+		function expectError(err) {
+			expect(err.plugin).toBe('gulp-hb');
+			expect(err.message).toContain('derp');
+			done();
+		}
+
 		vinylFs
 			.src(fixture)
 			.pipe(plugin)
 			.on('data', expectFile)
-			.on('error', done);
+			.on('error', expectError);
 	}
 
 	beforeEach(function () {
@@ -133,5 +139,9 @@ describe('gulp-hb e2e', function () {
 		};
 
 		testWithFile('dataEach.html', hb(options), done);
+	});
+
+	it('should handle errors', function (done) {
+		testWithFile('error.html', hb(), done);
 	});
 });
