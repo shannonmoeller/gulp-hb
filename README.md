@@ -156,6 +156,22 @@ module.exports = {
 };
 ```
 
+If you need a reference to the handlebars instance inside of a helper, you may expose a factory `register` method.
+
+```js
+// helpers.js
+module.exports.regsiter = function (handlebars) {
+    handlebars.registerHelper('link', function(text, url) {
+        text = handlebars.Utils.escapeExpression(text);
+        url  = handlebars.Utils.escapeExpression(url);
+        
+        var result = '<a href="' + url + '">' + text + '</a>';
+        
+        return new handlebars.SafeString(result);
+    });
+};
+```
+
 ### `partials` `{String|Array.<String>|Object|Function}`
 
 A glob string matching partial files, an array of glob strings, an [object of partials](http://handlebarsjs.com/reference.html#base-registerPartial), or a function returning any of these. Globbed partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
@@ -192,6 +208,18 @@ Partials may also be modules that export an object of named partials.
 module.exports = {
     link: '<a href="{{url}}">{{text}}</a>',
     people: '<ul>{{#people}}<li>{{> link}}</li>{{/people}}</ul>'
+};
+```
+
+If you need a reference to the handlebars instance when defining a partial, you may expose a factory `register` method.
+
+```js
+// partials.js
+module.exports.regsiter = function (handlebars) {
+    handlebars.registerPartial({
+        item: '<li>{{label}}</li>',
+        link: '<a href="{{url}}">{{label}}</a>'
+    });
 };
 ```
 
