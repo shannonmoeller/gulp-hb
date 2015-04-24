@@ -1,3 +1,39 @@
+## 2.4.3
+
+Features:
+
+- Cleaned up internals to facilitate cleaner pass-through of options to core dependencies. Exposes more options without having to explicitly support them.
+- Exposed handlebars instance.
+
+## 2.4.2
+
+Features:
+
+- Improved error handling.
+
+## 2.4.1
+
+Documentation updates and test correction.
+
+## 2.4.0
+
+Features:
+
+- Switched internals from using `map-stream` to `through2.obj`.
+- Added `debug` option.
+
+## 2.3.0
+
+Features:
+
+- Added `dataEach` option to support modifying the context on a per-file basis.
+
+## 2.2.0
+
+Features:
+
+- Added support for defining data, helpers, and partials as objects or maker functions.
+
 ## 2.1.1
 
 Bufixes:

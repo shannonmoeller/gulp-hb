@@ -34,6 +34,10 @@ gulp.task('default', function () {
 
 Returns a Gulp-compatible transform stream that compiles handlebars templates to static output.
 
+### `hb.handlebars`
+
+Reference to the instance of handlebars being used.
+
 ## Options
 
 ### `bustCache` `{Boolean}` (default: `false`)
@@ -164,9 +168,9 @@ module.exports.regsiter = function (handlebars) {
     handlebars.registerHelper('link', function(text, url) {
         text = handlebars.Utils.escapeExpression(text);
         url  = handlebars.Utils.escapeExpression(url);
-        
+
         var result = '<a href="' + url + '">' + text + '</a>';
-        
+
         return new handlebars.SafeString(result);
     });
 };
