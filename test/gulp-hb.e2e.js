@@ -14,7 +14,7 @@ var hb,
 	};
 
 describe('gulp-hb e2e', function () {
-	function testWithFile(filename, plugin, done) {
+	function testWithFile(filename, options, done) {
 		var fixture = config.fixtures + filename,
 			expected = config.expected + filename;
 
@@ -31,7 +31,7 @@ describe('gulp-hb e2e', function () {
 
 		vinylFs
 			.src(fixture)
-			.pipe(plugin)
+			.pipe(hb(options))
 			.on('data', expectFile)
 			.on('error', expectError);
 	}
@@ -47,23 +47,23 @@ describe('gulp-hb e2e', function () {
 	});
 
 	it('should render handlebars files with no options', function (done) {
-		testWithFile('none.html', hb(), done);
+		testWithFile('none.html', null, done);
 	});
 
 	it('should render handlebars files with empty options', function (done) {
-		testWithFile('none.html', hb({}), done);
+		testWithFile('none.html', {}, done);
 	});
 
 	it('should render handlebars files with data', function (done) {
-		testWithFile('data.html', hb({ data: config.data }), done);
+		testWithFile('data.html', { data: config.data }, done);
 	});
 
 	it('should render handlebars files with helpers', function (done) {
-		testWithFile('helpers.html', hb({ helpers: config.helpers }), done);
+		testWithFile('helpers.html', { helpers: config.helpers }, done);
 	});
 
 	it('should render handlebars files with partials', function (done) {
-		testWithFile('partials.html', hb({ partials: config.partials }), done);
+		testWithFile('partials.html', { partials: config.partials }, done);
 	});
 
 	it('should render handlebars files with all the things', function (done) {
@@ -74,7 +74,7 @@ describe('gulp-hb e2e', function () {
 			partials: config.partials
 		};
 
-		testWithFile('all.html', hb(options), done);
+		testWithFile('all.html', options, done);
 	});
 
 	it('should render handlebars files with object options', function (done) {
@@ -95,7 +95,7 @@ describe('gulp-hb e2e', function () {
 			}
 		};
 
-		testWithFile('objects.html', hb(options), done);
+		testWithFile('objects.html', options, done);
 	});
 
 	it('should render handlebars files with function options', function (done) {
@@ -120,7 +120,7 @@ describe('gulp-hb e2e', function () {
 			}
 		};
 
-		testWithFile('functions.html', hb(options), done);
+		testWithFile('functions.html', options, done);
 	});
 
 	it('should allow context to be modified on a per-file basis', function (done) {
@@ -138,7 +138,7 @@ describe('gulp-hb e2e', function () {
 			}
 		};
 
-		testWithFile('dataEach.html', hb(options), done);
+		testWithFile('dataEach.html', options, done);
 	});
 
 	it('should handle errors', function (done) {
