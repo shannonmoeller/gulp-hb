@@ -16,11 +16,14 @@ var gutil = require('gulp-util'),
  * @param {String=} options.cwd Current working directory. Defaults to `process.cwd()`.
  * @param {Object|String|Array.<String>|Function=} options.data One or more glob strings matching data files.
  * @param {Function(Object,Vinyl):Object=} options.dataEach Pre-render hook to modify the context on a per-file basis.
- * @param {Function=} options.dataReducer  Custom reducer for building the data object.
  * @param {Boolean=} options.debug Whether to log data, helpers, and partials.
+ * @param {Function=} options.parseDataName Custom name generator for data keys.
+ * @param {Function=} options.dataReducer Custom reducer for building the data object.
  * @param {Object|String|Array.<String>|Function=} options.helpers One or more glob strings matching helpers.
+ * @param {Function=} options.parseHelperName Custom name generator for helpers.
  * @param {Function=} options.helpersReducer Custom reducer for registering helpers.
  * @param {Object|String|Array.<String>|Function=} options.partials One or more glob strings matching partials.
+ * @param {Function=} options.parsePartialName Custom name generator for partials.
  * @param {Function=} options.partialsReducer Custom reducer for registering partials.
  * @param {Boolean=} options.file Whether to include the file object in the data passed to the template.
  * @return {Stream}
@@ -40,6 +43,7 @@ function hb(options) {
 
 	// Generate data
 	if (data) {
+		options.keygen = options.parseDataName;
 		options.reducer = options.dataReducer;
 		data = requireGlob.sync(data, options);
 	}
@@ -49,9 +53,11 @@ function hb(options) {
 
 	// Stream it
 	return through.obj(function (file, enc, cb) {
+		var context, template;
+
 		try {
-			var context = Object.create(data || {}),
-				template = handlebars.compile(file.contents.toString());
+			context = Object.create(data || {});
+			template = handlebars.compile(file.contents.toString());
 
 			if (includeFile) {
 				context.file = file;

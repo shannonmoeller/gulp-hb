@@ -42,12 +42,10 @@
     "expect": "^1.6.0",
     "expect.js": "^0.3.1",
     "gulp": "^3.8.11",
+    "gulp-eslint": "^0.11.1",
     "gulp-istanbul": "^0.8.1",
-    "gulp-jscs": "^1.5.2",
-    "gulp-jshint": "^1.10.0",
     "gulp-mocha": "^2.0.1",
     "gulp-plumber": "^1.0.0",
-    "jshint-stylish": "^1.0.1",
     "vinyl-fs": "^1.0.0"
   },
   "engines": {

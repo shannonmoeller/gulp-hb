@@ -1,16 +1,18 @@
+/*eslint-env mocha */
 'use strict';
 
 var hb,
 	expect = require('expect'),
 	fs = require('fs'),
+	path = require('path'),
 	vinylFs = require('vinyl-fs'),
 
 	config = {
-		data: __dirname + '/fixtures/data/**/*.{js,json}',
-		helpers: __dirname + '/fixtures/helpers/**/*.js',
-		partials: __dirname + '/fixtures/partials/**/*.hbs',
-		fixtures: __dirname + '/fixtures/templates/',
-		expected: __dirname + '/expected/templates/'
+		data: path.join(__dirname, '/fixtures/data/**/*.{js,json}'),
+		helpers: path.join(__dirname, '/fixtures/helpers/**/*.js'),
+		partials: path.join(__dirname, '/fixtures/partials/**/*.hbs'),
+		fixtures: path.join(__dirname, '/fixtures/templates/'),
+		expected: path.join(__dirname, '/expected/templates/')
 	};
 
 describe('gulp-hb e2e', function () {
