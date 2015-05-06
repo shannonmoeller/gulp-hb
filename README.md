@@ -100,7 +100,7 @@ parseDataName: function (file) {
 
     // Ignore directory names
     return path.basename(file.path);
-};
+}
 ```
 
 ### `helpers` `{String|Array.<String>|Object|Function}`
@@ -183,7 +183,7 @@ parseHelperName: function (file) {
 
     // Ignore directory names
     return path.basename(file.path);
-};
+}
 ```
 
 ### `partials` `{String|Array.<String>|Object|Function}`
@@ -250,7 +250,7 @@ parsePartialName: function (file) {
 
     // Ignore directory names
     return path.basename(file.shortPath);
-};
+}
 ```
 
 ### `bustCache` `{Boolean}` (default: `false`)
