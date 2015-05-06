@@ -99,18 +99,6 @@ parseDataName: = function (file) {
 };
 ```
 
-### `dataEach` `{Function(Object,Vinyl):Object}`
-
-A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis. May be used to load additional file-specific data.
-
-```js
-dataEach: function (context, file) {
-    context.foo = 'bar';
-    context.meta = require(file.path.replace('.hbs', '.json'));
-    return context;
-}
-```
-
 ### `debug` `{Boolean}` (default: `false`)
 
 Whether to log the helper names, partial names, and root property names for each file as they are rendered.
