@@ -1,3 +1,9 @@
+## 2.5.0
+
+Features:
+
+- Added `parseDataName`, `parseHelperName`, and `parsePartialName` options.
+
 ## 2.4.3
 
 Features:

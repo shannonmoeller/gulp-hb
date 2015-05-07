@@ -92,7 +92,7 @@ By default, globbed data files are merged into a object structure according to t
 You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
 
 ```js
-parseDataName: = function (file) {
+parseDataName: function (file) {
     // this.handlebars <- current handlebars instance
     // file.path       <- full system path with extension
     // file.shortPath  <- shortest unique path without extension
@@ -100,7 +100,7 @@ parseDataName: = function (file) {
 
     // Ignore directory names
     return path.basename(file.path);
-};
+}
 ```
 
 ### `helpers` `{String|Array.<String>|Object|Function}`
@@ -175,7 +175,7 @@ module.exports.register = function (handlebars) {
 By default, standalone helpers will be named according to the shortest unique file path without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks). You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
 
 ```js
-parseHelperName: = function (file) {
+parseHelperName: function (file) {
     // this.handlebars <- current handlebars instance
     // file.path       <- full system path with extension
     // file.shortPath  <- shortest unique path without extension
@@ -183,7 +183,7 @@ parseHelperName: = function (file) {
 
     // Ignore directory names
     return path.basename(file.path);
-};
+}
 ```
 
 ### `partials` `{String|Array.<String>|Object|Function}`
@@ -242,7 +242,7 @@ module.exports.register = function (handlebars) {
 By default, standalone partials will be named according to the shortest unique file path without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`. You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
 
 ```js
-parsePartialName: = function (file) {
+parsePartialName: function (file) {
     // this.handlebars <- current handlebars instance
     // file.path       <- full system path with extension
     // file.shortPath  <- shortest unique path without extension
@@ -250,7 +250,7 @@ parsePartialName: = function (file) {
 
     // Ignore directory names
     return path.basename(file.shortPath);
-};
+}
 ```
 
 ### `bustCache` `{Boolean}` (default: `false`)
