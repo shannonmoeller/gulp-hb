@@ -1,0 +1,14 @@
+<ul class="nav">
+    {{#each children}}
+        <li {{#if active}}class="isActive"{{/if}}>
+            {{#if href}}
+                <a href="{{ href }}">{{ title }}</a></li>
+            {{else}}
+                {{ title }}
+            {{/if}}
+            {{#if children.length}}
+                {{> nav children=children}}
+            {{/if}}
+        </li>
+    {{/each}}
+</ul>

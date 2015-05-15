@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>{{file.meta.title}} - {{site.title}}</title>
+
+</head>
+<body>
+
+	<div class="site">
+		<header class="site-hd" role="banner">
+			<h1>{{site.title}}</h1>
+			<h2>{{file.meta.title}}</h2>
+		</header>
+
+		<div class="site-bd" role="main">
+			{{{block "content"}}}
+		</div>
+
+		{{#block "footer"}}
+			<footer class="site-ft" role="contentinfo">
+				<p>
+					{{file.meta.author}},
+					{{#with file.data.date}}
+						<time>{{month}}/{{day}}/{{year}}</time>
+					{{/with}}
+				</p>
+			</footer>
+		{{/block}}
+	</div>
+
+</body>
+</html>

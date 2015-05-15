@@ -1,0 +1,11 @@
+{
+  "name": "gulp-hb-example-nav-tree",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-front-matter": "^1.2.2",
+    "gulp-hb": "^2.5.0",
+    "gulp-nav": "^0.1.8"
+  }
+}

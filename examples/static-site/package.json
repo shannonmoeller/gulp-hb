@@ -1,0 +1,13 @@
+{
+  "name": "gulp-hb-examples-static-site",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-data": "^1.2.0",
+    "gulp-front-matter": "^1.2.2",
+    "gulp-gh-pages": "^0.5.1",
+    "gulp-hb": "^2.4.3",
+    "handlebars-layouts": "^2.0.2"
+  }
+}
