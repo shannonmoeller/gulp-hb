@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.4",
-    "handlebars": "^3.0.1",
-    "handlebars-registrar": "^1.3.1",
-    "require-glob": "^1.2.0",
+    "handlebars": "^3.0.3",
+    "handlebars-registrar": "^1.5.0",
+    "require-glob": "^1.3.1",
     "through2": "^0.6.5"
   },
   "devDependencies": {
@@ -44,10 +44,10 @@
     "expect": "^1.6.0",
     "expect.js": "^0.3.1",
     "gulp": "^3.8.11",
-    "gulp-eslint": "^0.11.1",
-    "gulp-istanbul": "^0.8.1",
-    "gulp-mocha": "^2.0.1",
-    "gulp-plumber": "^1.0.0",
+    "gulp-eslint": "^0.12.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.1.0",
+    "gulp-plumber": "^1.0.1",
     "vinyl-fs": "^1.0.0"
   },
   "engines": {

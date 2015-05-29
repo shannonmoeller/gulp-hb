@@ -49,15 +49,16 @@ function hb(options) {
 	}
 
 	// Register helpers and partials
-	registrar(handlebars, options);
+	registrar(hb.handlebars, options);
 
 	// Stream it
 	return through.obj(function (file, enc, cb) {
-		var context, template;
+		var context, template,
+			hbs = hb.handlebars;
 
 		try {
 			context = Object.create(data || {});
-			template = handlebars.compile(file.contents.toString());
+			template = hbs.compile(file.contents.toString());
 
 			if (includeFile) {
 				context.file = file;
@@ -71,8 +72,8 @@ function hb(options) {
 				logger.file(file.path.replace(file.base, ''));
 				logger.keys('     data', data);
 				logger.keys('  context', context);
-				logger.keys('  helpers', handlebars.helpers);
-				logger.keys(' partials', handlebars.partials);
+				logger.keys('  helpers', hbs.helpers);
+				logger.keys(' partials', hbs.partials);
 			}
 
 			file.contents = new Buffer(template(context));

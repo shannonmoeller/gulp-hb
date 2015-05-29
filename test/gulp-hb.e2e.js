@@ -1,7 +1,8 @@
 /*eslint-env mocha */
 'use strict';
 
-var hb,
+var hb = require('../index'),
+	handlebars = require('handlebars'),
 	expect = require('expect'),
 	fs = require('fs'),
 	path = require('path'),
@@ -39,13 +40,8 @@ describe('gulp-hb e2e', function () {
 	}
 
 	beforeEach(function () {
-		// Delete
-		delete require.cache[require.resolve('handlebars')];
-		delete require.cache[require.resolve('../index')];
-
-		// Reload
-		require('handlebars');
-		hb = require('../index');
+		// Reset Handlebars instance.
+		hb.handlebars = handlebars.create();
 	});
 
 	it('should render handlebars files with no options', function (done) {
