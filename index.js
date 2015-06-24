@@ -81,7 +81,7 @@ function hb(options) {
 			cb(null, file);
 		}
 		catch (err) {
-			cb(new gutil.PluginError('gulp-hb', err));
+			cb(new gutil.PluginError('gulp-hb', err, {stack: err.stack, showStack: true}));
 		}
 	});
 }
