@@ -78,10 +78,14 @@ function hb(options) {
 
 			file.contents = new Buffer(template(context));
 
-			cb(null, file);
+			this.push(file);
+			cb();
 		}
 		catch (err) {
-			cb(new gutil.PluginError('gulp-hb', err, {stack: err.stack, showStack: true}));
+			cb(new gutil.PluginError('gulp-hb', err, {
+				stack: err.stack,
+				showStack: true
+			}));
 		}
 	});
 }

@@ -23,7 +23,7 @@
     "generators": false,
     "globalReturn": false,
     "jsx": false,
-    "modules": true,
+    "modules": false,
     "objectLiteralComputedProperties": true,
     "objectLiteralDuplicateProperties": false,
     "objectLiteralShorthandMethods": false,
@@ -40,7 +40,7 @@
   "rules": {
     // Possible Errors
     "comma-dangle": [2, "never"],             // disallow or enforce trailing commas
-    "no-cond-assign": "except-parens",        // disallow assignment in conditional expressions
+    "no-cond-assign": [2, "except-parens"],   // disallow assignment in conditional expressions
     "no-console": 0,                          // disallow use of console (off by default in the node environment)
     "no-constant-condition": 2,               // disallow use of constant expressions in conditions
     "no-control-regex": 2,                    // disallow control characters in regular expressions
@@ -131,7 +131,7 @@
     "yoda": 0,                                // require or disallow Yoda conditions
 
     // Strict mode
-    "strict": "global",                       // controls location of Use Strict Directives
+    "strict": [2, "global"],                  // controls location of Use Strict Directives
 
     // Variables
     "no-catch-shadow": 2,                     // disallow the catch clause parameter name being the same as a variable in the outer scope (off by default in the node environment)
@@ -217,7 +217,7 @@
     }],
     "space-in-brackets": 0, /* need v1.0 */   // require or disallow spaces inside brackets (off by default)
     "space-in-parens": [2, "never"],          // require or disallow spaces inside parentheses (off by default)
-    "space-infix-ops": [2, "always"],         // require spaces around operators
+    "space-infix-ops": 2,                     // require spaces around operators
     "space-return-throw-case": 2,             // require a space after return, throw, and case
     "space-unary-ops": [1, {                  // Require or disallow spaces before/after unary operators (words on by default, nonwords off by default)
       "words": true,
