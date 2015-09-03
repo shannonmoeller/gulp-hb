@@ -3,6 +3,7 @@
 var gutil = require('gulp-util'),
 	handlebars = require('handlebars'),
 	logger = require('./util/logger'),
+	mixin = require('./util/mixin'),
 	registrar = require('handlebars-registrar'),
 	requireGlob = require('require-glob'),
 	through = require('through2');
@@ -57,7 +58,7 @@ function hb(options) {
 			hbs = hb.handlebars;
 
 		try {
-			context = Object.create(data || {});
+			context = mixin({}, data);
 			template = hbs.compile(file.contents.toString());
 
 			if (includeFile) {
