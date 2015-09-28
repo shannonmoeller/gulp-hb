@@ -40,17 +40,25 @@ Reference to the instance of handlebars being used.
 
 ## Options
 
-- [`data` `{String|Array.<String>|Object|Function}`](#data-string%7Carraystring%7Cobject%7Cfunction)
-- [`parseDataName` `{Function(Object):String}`](#parsedataname-functionobjectstring)
-- [`helpers` `{String|Array.<String>|Object|Function}`](#helpers-string%7Carraystring%7Cobject%7Cfunction)
-- [`parseHelperName` `{Function(Object):String}`](#parsehelpername-functionobjectstring)
-- [`partials` `{String|Array.<String>|Object|Function}`](#partials-string%7Carraystring%7Cobject%7Cfunction)
-- [`parsePartialName` `{Function(Object):String}`](#parsepartialname-functionobjectstring)
 - [`bustCache` `{Boolean}` (default: `false`)](#bustcache-boolean-default-false)
 - [`cwd` `{String}`](#cwd-string)
-- [`dataEach` `{Function(Object,Vinyl):Object}`](#dataeach-functionobjectvinylobject)
 - [`debug` `{Boolean}` (default: `false`)](#debug-boolean-default-false)
+- [`data` `{String|Array.<String>|Object|Function}`](#data-string%7Carraystring%7Cobject%7Cfunction)
+  - [`parseDataName` `{Function(Object):String}`](#parsedataname-functionobjectstring)
+- [`dataEach` `{Function(Object,Vinyl):Object}`](#dataeach-functionobjectvinylobject)
 - [`file` `{Boolean}` (default: `true`)](#file-boolean-default-true)
+- [`helpers` `{String|Array.<String>|Object|Function}`](#helpers-string%7Carraystring%7Cobject%7Cfunction)
+  - [`parseHelperName` `{Function(Object):String}`](#parsehelpername-functionobjectstring)
+- [`partials` `{String|Array.<String>|Object|Function}`](#partials-string%7Carraystring%7Cobject%7Cfunction)
+  - [`parsePartialName` `{Function(Object):String}`](#parsepartialname-functionobjectstring)
+
+### `bustCache` `{Boolean}` (default: `false`)
+
+Whether to force a reload of data, helpers, and partials by deleting them from the cache. Useful inside watch tasks.
+
+### `cwd` `{String}`
+
+Current working directory. Defaults to `process.cwd()`.
 
 ### `data` `{String|Array.<String>|Object|Function}`
 
@@ -74,7 +82,7 @@ data: {
 }
 ```
 
-### `parseDataName` `{Function(Object):String}`
+#### `parseDataName` `{Function(Object):String}`
 
 By default, globbed data files are merged into a object structure according to the shortest unique file path without the extension, where path separators determine object nesting. So if you have two data files with the paths `site/meta.js` and `posts/nav.js`, the data object will be equivelent to the following:
 
@@ -101,6 +109,46 @@ parseDataName: function (file) {
     // Ignore directory names
     return path.basename(file.path);
 }
+```
+
+### `dataEach` `{Function(Object,Vinyl):Object}`
+
+A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis. May be used to load additional file-specific data.
+
+```js
+dataEach: function (context, file) {
+    context.foo = 'bar';
+    context.meta = require(file.path.replace('.html', '.json'));
+    return context;
+}
+```
+
+### `debug` `{Boolean}` (default: `false`)
+
+Whether to log the helper names, partial names, and root property names for each file as they are rendered.
+
+### `file` `{Boolean}` (default: `true`)
+
+Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
+
+```js
+var gulp = require('gulp'),
+    frontMatter = require('gulp-front-matter'),
+    hb = require('gulp-hb');
+
+gulp.task('default', function () {
+    gulp.src('src/{,posts/}**/*.html')
+        .pipe(frontMatter())
+        .pipe(hb())
+        .pipe(gulp.dest('./web/'));
+});
+```
+
+```handlebars
+---
+title: Hello World
+---
+<h1>{{file.frontMatter.title}}</h1>
 ```
 
 ### `helpers` `{String|Array.<String>|Object|Function}`
@@ -170,7 +218,7 @@ module.exports.register = function (handlebars) {
 };
 ```
 
-### `parseHelperName` `{Function(Object):String}`
+#### `parseHelperName` `{Function(Object):String}`
 
 By default, standalone helpers will be named according to the shortest unique file path without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks). You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
 
@@ -237,7 +285,7 @@ module.exports.register = function (handlebars) {
 };
 ```
 
-### `parsePartialName` `{Function(Object):String}`
+#### `parsePartialName` `{Function(Object):String}`
 
 By default, standalone partials will be named according to the shortest unique file path without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`. You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
 
@@ -251,54 +299,6 @@ parsePartialName: function (file) {
     // Ignore directory names
     return path.basename(file.shortPath);
 }
-```
-
-### `bustCache` `{Boolean}` (default: `false`)
-
-Whether to force a reload of data, helpers, and partials by deleting them from the cache. Useful inside watch tasks.
-
-### `cwd` `{String}`
-
-Current working directory. Defaults to `process.cwd()`.
-
-### `dataEach` `{Function(Object,Vinyl):Object}`
-
-A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis. May be used to load additional file-specific data.
-
-```js
-dataEach: function (context, file) {
-    context.foo = 'bar';
-    context.meta = require(file.path.replace('.html', '.json'));
-    return context;
-}
-```
-
-### `debug` `{Boolean}` (default: `false`)
-
-Whether to log the helper names, partial names, and root property names for each file as they are rendered.
-
-### `file` `{Boolean}` (default: `true`)
-
-Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
-
-```js
-var gulp = require('gulp'),
-    frontMatter = require('gulp-front-matter'),
-    hb = require('gulp-hb');
-
-gulp.task('default', function () {
-    gulp.src('src/{,posts/}**/*.html')
-        .pipe(frontMatter())
-        .pipe(hb())
-        .pipe(gulp.dest('./web/'));
-});
-```
-
-```handlebars
----
-title: Hello World
----
-<h1>{{file.frontMatter.title}}</h1>
 ```
 
 ## Contribute
