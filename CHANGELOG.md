@@ -1,3 +1,9 @@
+## 2.6.4
+
+Bugfix:
+
+- Moved template compilation to after the `dataEach()` call to allow the template to be modified in the `dataEach()` callback.
+
 ## 2.5.0
 
 Features:
