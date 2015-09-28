@@ -59,7 +59,6 @@ function hb(options) {
 
 		try {
 			context = mixin({}, data);
-			template = hbs.compile(file.contents.toString());
 
 			if (includeFile) {
 				context.file = file;
@@ -77,6 +76,7 @@ function hb(options) {
 				logger.keys(' partials', hbs.partials);
 			}
 
+			template = hbs.compile(String(file.contents));
 			file.contents = new Buffer(template(context));
 
 			this.push(file);
