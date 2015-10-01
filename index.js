@@ -1,5 +1,3 @@
-'use strict';
-
 var gutil = require('gulp-util'),
 	handlebars = require('handlebars'),
 	logger = require('./util/logger'),

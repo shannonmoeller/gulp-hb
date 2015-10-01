@@ -23,7 +23,7 @@
     "generators": false,
     "globalReturn": false,
     "jsx": false,
-    "modules": false,
+    "modules": true,
     "objectLiteralComputedProperties": true,
     "objectLiteralDuplicateProperties": false,
     "objectLiteralShorthandMethods": false,
@@ -49,7 +49,7 @@
     "no-dupe-keys": 2,                        // disallow duplicate keys when creating object literals
     "no-duplicate-case": 2,                   // disallow a duplicate case label.
     "no-empty": 2,                            // disallow empty statements
-    "no-empty-class": 2,                      // disallow the use of empty character classes in regular expressions
+    "no-empty-character-class": 2,            // disallow the use of empty character classes in regular expressions
     "no-ex-assign": 2,                        // disallow assigning to the exception in a catch block
     "no-extra-boolean-cast": 2,               // disallow double-negation boolean casts in a boolean context
     "no-extra-parens": 2,                     // disallow unnecessary parentheses (off by default)
@@ -65,16 +65,8 @@
     "no-sparse-arrays": 2,                    // disallow sparse arrays
     "no-unreachable": 2,                      // disallow unreachable statements after a return, throw, continue, or break statement
     "use-isnan": 2,                           // disallow comparisons with the value NaN
-    "value-jsdoc": 0,
-    // "valid-jsdoc": [2, {                      // Ensure JSDoc comments are valid (off by default)
-    //   "prefer": {
-    //     "returns": "return"
-    //   },
-    //   "requireParamDescription": true,
-    //   "requireReturn": false,
-    //   "requireReturnDescription": true
-    // }],
-    "valid-typeof": 2,                        // Ensure that the results of typeof are compared against a valid string
+    "valid-jsdoc": 0,                         // ensure JSDoc comments are valid (off by default)
+    "valid-typeof": 2,                        // ensure that the results of typeof are compared against a valid string
 
     // Best Practices
     "block-scoped-var": 0,                    // treat var statements as if they were block scoped (off by default)
@@ -86,7 +78,7 @@
       "allowKeywords": true,
       "allowPattern": "^[a-z]+([_-][a-z]+)+$"
     }],
-    "eqeqeq": 2,                              // require the use of === and !==
+    "eqeqeq": [2, "allow-null"],                              // require the use of === and !==
     "guard-for-in": 2,                        // make sure for-in loops have an if statement (off by default)
     "no-alert": 2,                            // disallow the use of alert, confirm, and prompt
     "no-caller": 2,                           // disallow use of arguments.caller or arguments.callee
@@ -159,7 +151,8 @@
 
     // Style
     "indent": [2, "tab", {                    // this option sets a specific tab width for your code (off by default)
-      "indentSwitchCase": true
+      "SwitchCase": 1,
+	  "VariableDeclarator": 1
     }],
     "brace-style": [2, "stroustrup"],         // enforce one true brace style (off by default)
     "camelcase": [2, {                        // require camel case names
@@ -196,7 +189,7 @@
     "no-ternary": 0,                          // disallow the use of ternary operators (off by default)
     "no-trailing-spaces": 2,                  // disallow trailing whitespace at the end of lines
     "no-underscore-dangle": 0,                // disallow dangling underscores in identifiers
-    "no-wrap-func": 2,                        // disallow wrapping of non-IIFE statements in parens
+    "no-extra-parens": 2,                     // disallow wrapping of non-IIFE statements in parens
     "one-var": [2, "always"],                 // allow or disallow one variable declaration per function (off by default)
     "operator-assignment": [2, "always"],     // require assignment operator shorthand where possible or prohibit it entirely (off by default)
     "operator-linebreak": [2, "before"],      // enforce operators to be placed before or after line breaks (off by default)
@@ -223,7 +216,7 @@
       "words": true,
       "nonwords": false
     }],
-    "spaced-line-comment": [2, "always"],     // require or disallow a space immediately following the // in a line comment (off by default)
+    "spaced-comment": [2, "always"],          // require or disallow a space immediately following the // in a line comment (off by default)
     "wrap-regex": 2,                          // require regex literals to be wrapped in parentheses (off by default)
 
     // ES6

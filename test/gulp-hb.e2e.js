@@ -1,5 +1,4 @@
-/*eslint-env mocha */
-'use strict';
+/* eslint-env mocha */
 
 var hb = require('../index'),
 	handlebars = require('handlebars'),
