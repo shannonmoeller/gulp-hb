@@ -4,3 +4,4 @@ node_js:
   - iojs
 after_script:
   - npm run coveralls
+sudo: false
