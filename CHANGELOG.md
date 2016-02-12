@@ -1,3 +1,15 @@
+## 3.0.0
+
+Bugfix:
+
+- Cross-contamination eliminated by creating a fresh instance of Handlebars every time ([#24](https://github.com/shannonmoeller/gulp-hb/issues/24), [#29](https://github.com/shannonmoeller/gulp-hb/issues/29)).
+
+Features:
+
+- Upgraded `handlebars` and `handlebars-wax`.
+- Now possible to specify `Handlebars.compile` options ([#28](https://github.com/shannonmoeller/gulp-hb/issues/28)).
+- File objects now attached to error objects for easier debugging ([#23](https://github.com/shannonmoeller/gulp-hb/issues/23)).
+
 ## 2.6.4
 
 Bugfix:

@@ -2,304 +2,180 @@
 
 [![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Chat][gitter-img]][gitter-url] [![Tip][amazon-img]][amazon-url]
 
-A sane static Handlebars Gulp plugin. Think [Assemble](http://assemble.io/), but with a lot less [Jekyll](http://jekyllrb.com/) baggage.
+A sane static [Handlebars][handlebars] Gulp plugin. Useful as a static site generator. Think [Assemble][assemble], but with a lot less [Jekyll][jekyll] baggage.
 
-For Grunt, see [grunt-hb](https://github.com/shannonmoeller/grunt-hb). To precompile templates into JavaScript, see [gulp-handlebars](https://github.com/lazd/gulp-handlebars).
+For Grunt, see [`grunt-hb`][grunt-hb]. To precompile templates into JavaScript, see [`gulp-handlebars`][gulp-handlebars].
 
 ## Install
 
     $ npm install --save-dev gulp-hb
 
-## Example
+## Usage
 
 ```js
-var gulp = require('gulp'),
-    hb = require('gulp-hb');
+var gulp = require('gulp');
+var hb = require('gulp-hb');
 
-gulp.task('default', function () {
+// Basic
+
+gulp.task('basic', function () {
     return gulp
         .src('./src/{,posts/}*.html')
         .pipe(hb({
-            data: './src/assets/data/**/*.{js,json}',
+            partials: './src/assets/partials/**/*.hbs',
             helpers: './src/assets/helpers/*.js',
-            partials: './src/assets/partials/**/*.hbs'
+            data: './src/assets/data/**/*.{js,json}'
         }))
-        .pipe(gulp.dest('./web/'));
+        .pipe(gulp.dest('./web'));
+});
+
+// Advanced
+
+gulp.task('advanced', function () {
+    var hbStream = hb()
+        // Partials
+        .partials('./partials/components/**/*.{hbs,js}')
+        .partials('./partials/layouts/**/*.{hbs,js}')
+        .partials({
+            boo: '{{#each boo}}{{greet}}{{/each}}',
+            far: '{{#each far}}{{length}}{{/each}}'
+        })
+
+        // Helpers
+        .helpers('./node_modules/handlebars-layouts/index.js')
+        .helpers('./helpers/**/*.js')
+        .helpers({
+            foo: function () { ... },
+            bar: function () { ... }
+        })
+
+        // Decorators
+        .decorators('./decorators/**/*.js')
+        .decorators({
+            baz: function () { ... },
+            qux: function () { ... }
+        })
+
+        // Data
+        .data('./data/**/*.{js,json}')
+        .data({
+            lorem: 'dolor',
+            ipsum: 'sit amet'
+        });
+
+    return gulp
+        .src('./src/{,posts/}*.html')
+        .pipe(hbStream)
+        .pipe(gulp.dest('./web'));
+});
+```
+
+### File-Specific Data
+
+File-specific data can be injected using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter].
+
+```js
+var gulp = require('gulp');
+var data = require('gulp-data');
+var frontMatter = require('gulp-front-matter');
+var hb = require('gulp-hb');
+
+gulp.task('inject', function () {
+    return gulp
+        .src('./src/{,posts/}*.html')
+
+        // Load an associated JSON file per post.
+        .pipe(data(function(file) {
+            return require(file.path.replace('.html', '.json'));
+        }))
+
+        // Parse front matter from post file.
+        .pipe(frontMatter({
+            property: 'data.frontMatter'
+        }))
+
+        // Data for everyone.
+        .pipe(hb().data('./data/**/*.js'))
+
+        .pipe(gulp.dest('./web'));
+```
+
+### Multiple Data Sources
+
+Multiple data sources can be used to render the same set of templates to different directories using [`through2`][through2].
+
+```js
+var gulp = require('gulp');
+var hb = require('gulp-hb');
+var through = require('through2');
+
+gulp.task('i18n', function () {
+    return gulp
+        .src('./i18n/*.json')
+        .pipe(through.obj(function (file, enc, cb) {
+            var locale = file.stem;
+            var data = {
+                locale: locale,
+                i18n: JSON.parse(file.contents.toString())
+            };
+
+            gulp
+                .src('./templates/**/*.html')
+                .pipe(hb().data(data))
+                .pipe(gulp.dest('./dist/' + locale))
+                .on('error', cb)
+                .on('end', cb);
+        }));
 });
 ```
 
 ## API
 
-### `hb([options])`
-
-Returns a Gulp-compatible transform stream that compiles handlebars templates to static output.
-
 ### `hb.handlebars`
 
-Reference to the instance of handlebars being used.
+Overridable reference to the instance of Handlebars to be used.
 
-## Options
+### `hb([options]): TransformStream`
 
-- [`bustCache` `{Boolean}` (default: `false`)](#bustcache-boolean-default-false)
-- [`cwd` `{String}`](#cwd-string)
-- [`debug` `{Boolean}` (default: `false`)](#debug-boolean-default-false)
-- [`data` `{String|Array.<String>|Object|Function}`](#data-string%7Carraystring%7Cobject%7Cfunction)
-  - [`parseDataName` `{Function(Object):String}`](#parsedataname-functionobjectstring)
-- [`dataEach` `{Function(Object,Vinyl):Object}`](#dataeach-functionobjectvinylobject)
-- [`file` `{Boolean}` (default: `true`)](#file-boolean-default-true)
-- [`helpers` `{String|Array.<String>|Object|Function}`](#helpers-string%7Carraystring%7Cobject%7Cfunction)
-  - [`parseHelperName` `{Function(Object):String}`](#parsehelpername-functionobjectstring)
-- [`partials` `{String|Array.<String>|Object|Function}`](#partials-string%7Carraystring%7Cobject%7Cfunction)
-  - [`parsePartialName` `{Function(Object):String}`](#parsepartialname-functionobjectstring)
+- `options` `{Object}` Passed directly to [`handlebars-wax`][wax] so check there for more options.
+  - `bustCache` `{Boolean}` (default: `true`) Force reload data, partials, helpers, and decorators.
+  - `cwd` `{String}` (default: `__dirname`) Current working directory.
+  - `debug` `{Boolean}` (default: `false`) Log property names of data, partials, helpers, and decorators per file.
+  - `file` `{Boolean}` (default: `false`) Include the file object in the data passed to the template.
+  - `partials` `{String|Array.<String>|Object}`
+  - `helpers` `{String|Array.<String>|Object}`
+  - `decorators` `{String|Array.<String>|Object}`
+  - `data` `{String|Array.<String>|Object}`
 
-### `bustCache` `{Boolean}` (default: `false`)
+Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars] templates to static output.
 
-Whether to force a reload of data, helpers, and partials by deleting them from the cache. Useful inside watch tasks.
+### .partials(pattern [, options]): TransformStream
 
-### `cwd` `{String}`
+- `pattern` `{String|Array<String>}`
+- `options` `{Object}`
 
-Current working directory. Defaults to `process.cwd()`.
+Loads additional partials. See [`handlebars-wax`][wax].
 
-### `data` `{String|Array.<String>|Object|Function}`
+### .helpers(pattern [, options]): TransformStream
 
-A glob string matching data files, an array of glob strings, an object literal, or a function returning any of these. Globbed data files are merged into an object structure which mirrors the directory structure and file names.
+- `pattern` `{String|Array<String>}`
+- `options` `{Object}`
 
-```js
-data: './src/assets/data/**/*.{js,json}'
-```
+Loads additional helpers. See [`handlebars-wax`][wax].
 
-```js
-data: [
-    './package.json',
-    './src/assets/data/**/*.{js,json}'
-]
-```
+### .decorators(pattern [, options]): TransformStream
 
-```js
-data: {
-    pkg: require('./package.json'),
-    foo: 'bar'
-}
-```
+- `pattern` `{String|Array<String>}`
+- `options` `{Object}`
 
-#### `parseDataName` `{Function(Object):String}`
+Loads additional decorators. See [`handlebars-wax`][wax].
 
-By default, globbed data files are merged into a object structure according to the shortest unique file path without the extension, where path separators determine object nesting. So if you have two data files with the paths `site/meta.js` and `posts/nav.js`, the data object will be equivelent to the following:
+### .data(pattern [, options]): TransformStream
 
-```js
-{
-    site: {
-        meta: require('site/meta.js')
-    },
-    posts: {
-        nav: require('posts/nav.js')
-    }
-}
-```
+- `pattern` `{String|Array<String>}`
+- `options` `{Object}`
 
-You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
-
-```js
-parseDataName: function (file) {
-    // this.handlebars <- current handlebars instance
-    // file.path       <- full system path with extension
-    // file.shortPath  <- shortest unique path without extension
-    // file.exports    <- result of requiring the helper
-
-    // Ignore directory names
-    return path.basename(file.path);
-}
-```
-
-### `dataEach` `{Function(Object,Vinyl):Object}`
-
-A pre-render hook to modify the context object being passed to the handlebars template on a per-file basis. May be used to load additional file-specific data.
-
-```js
-dataEach: function (context, file) {
-    context.foo = 'bar';
-    context.meta = require(file.path.replace('.html', '.json'));
-    return context;
-}
-```
-
-### `debug` `{Boolean}` (default: `false`)
-
-Whether to log the helper names, partial names, and root property names for each file as they are rendered.
-
-### `file` `{Boolean}` (default: `true`)
-
-Whether to include the file object in the data passed to the template. Particularly useful when paired with [`gulp-front-matter`](https://github.com/lmtm/gulp-front-matter) or [`gulp-data`](https://github.com/colynb/gulp-data) for example.
-
-```js
-var gulp = require('gulp'),
-    frontMatter = require('gulp-front-matter'),
-    hb = require('gulp-hb');
-
-gulp.task('default', function () {
-    gulp.src('src/{,posts/}**/*.html')
-        .pipe(frontMatter())
-        .pipe(hb())
-        .pipe(gulp.dest('./web/'));
-});
-```
-
-```handlebars
----
-title: Hello World
----
-<h1>{{file.frontMatter.title}}</h1>
-```
-
-### `helpers` `{String|Array.<String>|Object|Function}`
-
-A glob string matching helper files, an array of glob strings, an [object of helpers](http://handlebarsjs.com/reference.html#base-registerHelper), or a function returning any of these. Globbed helper files are JavaScript files that define one or more helpers.
-
-```js
-helpers: './src/assets/helpers/**/*.js'
-```
-
-```js
-helpers: [
-    './node_modules/handlebars-layouts/index.js',
-    './src/assets/helpers/**/*.js'
-]
-```
-
-```js
-helpers: {
-    lower: function (text) {
-        return String(text).toLowerCase();
-    },
-
-    upper: function (text) {
-        return String(text).toUpperCase();
-    }
-}
-```
-
-When including helpers using globs, modules may export a single helper function. These helpers will be named by calling `parseHelperName`.
-
-```js
-// lower.js
-module.exports = function (text) {
-    return String(text).toLowerCase();
-};
-```
-
-Helpers may also export an object of named functions.
-
-```js
-// helpers.js
-module.exports = {
-    lower: function (text) {
-        return String(text).toLowerCase();
-    },
-
-    upper: function (text) {
-        return String(text).toUpperCase();
-    }
-};
-```
-
-If you need a reference to the handlebars instance inside of a helper, you may expose a factory `register` method.
-
-```js
-// helpers.js
-module.exports.register = function (handlebars) {
-    handlebars.registerHelper('link', function(text, url) {
-        text = handlebars.Utils.escapeExpression(text);
-        url  = handlebars.Utils.escapeExpression(url);
-
-        var result = '<a href="' + url + '">' + text + '</a>';
-
-        return new handlebars.SafeString(result);
-    });
-};
-```
-
-#### `parseHelperName` `{Function(Object):String}`
-
-By default, standalone helpers will be named according to the shortest unique file path without the extension. So a helper with a path of `string/upper.js` will be named `string-upper`. Note that path separators are replaced with hyphens to avoid having to use [square brackets](http://handlebarsjs.com/expressions.html#basic-blocks). You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
-
-```js
-parseHelperName: function (file) {
-    // this.handlebars <- current handlebars instance
-    // file.path       <- full system path with extension
-    // file.shortPath  <- shortest unique path without extension
-    // file.exports    <- result of requiring the helper
-
-    // Ignore directory names
-    return path.basename(file.path);
-}
-```
-
-### `partials` `{String|Array.<String>|Object|Function}`
-
-A glob string matching partial files, an array of glob strings, an [object of partials](http://handlebarsjs.com/reference.html#base-registerPartial), or a function returning any of these. Globbed partial files are either standalone Handlebars files, or JavaScript files that define one or more helpers.
-
-```js
-partials: './src/assets/partials/**/*.{hbs,js}'
-```
-
-```js
-partials: [
-    './src/assets/vendor/some-theme/partials/**/*.hbs',
-    './src/assets/partials/**/*.hbs'
-]
-```
-
-```js
-partials: {
-    link: '<a href="{{url}}">{{text}}</a>',
-    people: '<ul>{{#people}}<li>{{> link}}</li>{{/people}}</ul>'
-}
-```
-
-When including paritals using globs, partials may be standalone handlebars files. Each partial will be named by calling `parsePartialName`.
-
-```handlebars
-{{!-- link.hbs --}}
-<a href="{{url}}">{{text}}</a>
-```
-
-Partials may also be modules that export an object of named partials.
-
-```js
-// partials.js
-module.exports = {
-    link: '<a href="{{url}}">{{text}}</a>',
-    people: '<ul>{{#people}}<li>{{> link}}</li>{{/people}}</ul>'
-};
-```
-
-If you need a reference to the handlebars instance when defining a partial, you may expose a factory `register` method.
-
-```js
-// partials.js
-module.exports.register = function (handlebars) {
-    handlebars.registerPartial({
-        item: '<li>{{label}}</li>',
-        link: '<a href="{{url}}">{{label}}</a>'
-    });
-};
-```
-
-#### `parsePartialName` `{Function(Object):String}`
-
-By default, standalone partials will be named according to the shortest unique file path without the extension. So a partial with a path of `component/link.hbs` will be named `component/link`. You may optionally provide your own name parser. This is helpful in cases where you may wish to exclude the directory names.
-
-```js
-parsePartialName: function (file) {
-    // this.handlebars <- current handlebars instance
-    // file.path       <- full system path with extension
-    // file.shortPath  <- shortest unique path without extension
-    // file.exports    <- result of requiring the helper
-
-    // Ignore directory names
-    return path.basename(file.shortPath);
-}
-```
+Loads additional data. See [`handlebars-wax`][wax].
 
 ## Contribute
 
@@ -313,9 +189,19 @@ Standards for this project, including tests, code coverage, and semantics are en
 
 ----
 
-© 2015 Shannon Moeller <me@shannonmoeller.com>
+© Shannon Moeller <me@shannonmoeller.com> (shannonmoeller.com)
 
 Licensed under [MIT](http://shannonmoeller.com/mit.txt)
+
+[assemble]: http://assemble.io/
+[grunt-hb]: https://github.com/shannonmoeller/grunt-hb#usage
+[gulp-data]: https://github.com/colynb/gulp-data#usage
+[gulp-front-matter]: https://github.com/lmtm/gulp-front-matter#usage
+[gulp-handlebars]: https://github.com/lazd/gulp-handlebars#usage
+[handlebars]: https://github.com/wycats/handlebars.js#usage
+[jekyll]: https://jekyllrb.com/
+[through2]: https://github.com/rvagg/through2#api
+[wax]: https://github.com/shannonmoeller/handlebars-wax#usage
 
 [amazon-img]:    https://img.shields.io/badge/amazon-tip_jar-yellow.svg?style=flat-square
 [amazon-url]:    https://www.amazon.com/gp/registry/wishlist/1VQM9ID04YPC5?sort=universal-price
