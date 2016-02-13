@@ -38,8 +38,6 @@
   },
   "homepage": "https://github.com/shannonmoeller/gulp-hb",
   "dependencies": {
-    "cli-table": "^0.3.1",
-    "cliui": "^3.1.0",
     "gulp-util": "^3.0.7",
     "handlebars": "^4.0.3",
     "handlebars-wax": "^3.1.0",

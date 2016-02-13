@@ -209,7 +209,7 @@ test.cb('should use registered decorator', assert => {
 });
 
 test.cb('should display debug info', assert => {
-	assert.plan(2);
+	assert.plan(3);
 
 	const stream = gulpHb({
 		debug: true,
@@ -254,8 +254,15 @@ test.cb('should display debug info', assert => {
 		b: 'ipsum'
 	};
 
+	var fileC = new gutil.File({
+		base: __dirname,
+		path: path.join(__dirname, 'fixture', 'c.js'),
+		contents: new Buffer('howdy world')
+	});
+
 	stream.write(fileA);
 	stream.write(fileB);
+	stream.write(fileC);
 
 	setImmediate(assert.end);
 });
