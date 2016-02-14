@@ -38,16 +38,16 @@
   },
   "homepage": "https://github.com/shannonmoeller/gulp-hb",
   "dependencies": {
+    "cli-columns": "^1.0.5",
     "gulp-util": "^3.0.7",
-    "handlebars": "^4.0.3",
-    "handlebars-wax": "^3.1.0",
+    "handlebars": "^4.0.5",
+    "handlebars-wax": "^3.2.1",
     "object-assign": "^4.0.1",
     "through2": "^2.0.1"
   },
   "devDependencies": {
     "ava": "^0.11.0",
-    "coveralls": "^2.11.4",
-    "handlebars": "^4.0.5",
+    "coveralls": "^2.11.6",
     "nyc": "^5.6.0",
     "vinyl-fs": "^2.3.1",
     "watch": "^0.17.1",

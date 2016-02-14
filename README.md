@@ -137,15 +137,21 @@ Overridable reference to the instance of Handlebars to be used.
 
 ### `hb([options]): TransformStream`
 
-- `options` `{Object}` Passed directly to [`handlebars-wax`][wax] so check there for more options.
+- `options` `{Object}` (optional) Passed directly to [`handlebars-wax`][wax] so check there for more options.
   - `bustCache` `{Boolean}` (default: `true`) Force reload data, partials, helpers, and decorators.
   - `cwd` `{String}` (default: `__dirname`) Current working directory.
   - `debug` `{Boolean}` (default: `false`) Log property names of data, partials, helpers, and decorators per file.
   - `file` `{Boolean}` (default: `false`) Include the file object in the data passed to the template.
+  - `compileOptions` `{Object}` Options to use when compiling templates.
+  - `templateOptions` `{Object}` Options to use when rendering templates.
   - `partials` `{String|Array.<String>|Object}`
+  - `parsePartialName` `{Function(options, file): String}`
   - `helpers` `{String|Array.<String>|Object}`
+  - `parseHelperName` `{Function(options, file): String}`
   - `decorators` `{String|Array.<String>|Object}`
+  - `parseDecoratorName` `{Function(options, file): String}`
   - `data` `{String|Array.<String>|Object}`
+  - `parseDataName` `{Function(options, file): String}`
 
 Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars] templates to static output.
 

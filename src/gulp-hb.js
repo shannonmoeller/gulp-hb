@@ -1,6 +1,7 @@
 'use strict';
 
 var assign = require('object-assign');
+var columns = require('cli-columns');
 var gutil = require('gulp-util');
 var handlebars = require('handlebars');
 var handlebarsWax = require('handlebars-wax');
@@ -12,20 +13,25 @@ function getParentDir() {
 }
 
 function logKeys(file, pairs) {
-	console.log('  ' + gutil.colors.green(file.relative));
+	var buf = [];
+	var options = {
+		width: process.stdout.columns - 12
+	};
 
 	pairs.forEach(function (pair) {
 		var key = pair[0];
 		var value = pair[1] || '';
 
 		if (typeof value !== 'string') {
-			value = Object.keys(value).sort().join('\n    - ');
+			value = columns(Object.keys(value), options);
 		}
 
-		console.log(gutil.colors.grey.bold('  ' + key + ':'));
-		console.log('    -', value);
+		buf.push(gutil.colors.grey('    ' + key + ':'));
+		buf.push(value.replace(/^/gm, '      '));
 	});
 
+	console.log('  ' + gutil.colors.green(file.relative));
+	console.log(buf.join('\n'));
 	console.log();
 }
 
@@ -75,7 +81,7 @@ function gulpHb(options) {
 
 		try {
 			var data = assign({}, file.data);
-			var template = wax.compile(file.contents.toString(), options);
+			var template = wax.compile(file.contents.toString());
 
 			if (options.file) {
 				data.file = file;
