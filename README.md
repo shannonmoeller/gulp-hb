@@ -72,7 +72,7 @@ gulp.task('advanced', function () {
 
 ### File-Specific Data
 
-Each file is rendered with `file.data` as the context. This value may be set using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter]. Registered data is accessible as the parent frame of `file.data` and as the `@root` context. See [handlebars-wax: Context and Rendering][context].
+Each file is rendered with `file.data` as the context. This value may be set using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter]. Registered data is accessible as the parent frame of `file.data` and as the `@root` context. See [handlebars-wax][context].
 
 ```js
 var gulp = require('gulp');
