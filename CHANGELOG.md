@@ -6,9 +6,13 @@ Bugfix:
 
 Features:
 
-- Upgraded `handlebars` and `handlebars-wax`.
 - Now possible to specify `Handlebars.compile` options ([#28](https://github.com/shannonmoeller/gulp-hb/issues/28)).
 - File objects now attached to error objects for easier debugging ([#23](https://github.com/shannonmoeller/gulp-hb/issues/23)).
+
+Breaking changes:
+
+- Upgraded `handlebars-registrar` to `handlebars-wax` which introduces new options, a fluent api for registration, and easier control over naming partials, helpers, and decorators.
+- The `file.data` property is now used as the default context for each template with registered data available as the parent frame and as the `@root` context. See [File-Specific Data](https://github.com/shannonmoeller/gulp-hb#file-specific-data).
 
 ## 2.6.4
 

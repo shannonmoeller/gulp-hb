@@ -53,7 +53,7 @@ gulp.task('advanced', function () {
         .decorators('./decorators/**/*.js')
         .decorators({
             baz: function () { ... },
-            qux: function () { ... }
+           qux: function () { ... }
         })
 
         // Data
@@ -72,7 +72,7 @@ gulp.task('advanced', function () {
 
 ### File-Specific Data
 
-File-specific data can be injected using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter].
+Each file is rendered with `file.data` as the context. This value may be set using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter]. Registered data is accessible as the parent frame of `file.data` and as the `@root` context. See [handlebars-wax: Context and Rendering][context].
 
 ```js
 var gulp = require('gulp');
@@ -130,10 +130,6 @@ gulp.task('i18n', function () {
 ```
 
 ## API
-
-### `hb.handlebars`
-
-Overridable reference to the instance of Handlebars to be used.
 
 ### `hb([options]): TransformStream`
 
@@ -200,6 +196,7 @@ Standards for this project, including tests, code coverage, and semantics are en
 Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 
 [assemble]: http://assemble.io/
+[context]: https://github.com/shannonmoeller/handlebars-wax#context-and-rendering
 [grunt-hb]: https://github.com/shannonmoeller/grunt-hb#usage
 [gulp-data]: https://github.com/colynb/gulp-data#usage
 [gulp-front-matter]: https://github.com/lmtm/gulp-front-matter#usage
