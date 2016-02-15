@@ -1,3 +1,13 @@
+## 3.1.1
+
+Bugfix:
+
+- Corrected `main` value in `package.json`. Oops.
+
+Feature:
+
+- Made it easier to directly register external modules. ([#31](https://github.com/shannonmoeller/gulp-hb/issues/31))
+
 ## 3.0.0
 
 Bugfix:
