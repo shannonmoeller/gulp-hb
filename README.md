@@ -42,7 +42,7 @@ gulp.task('advanced', function () {
         })
 
         // Helpers
-        .helpers('./node_modules/handlebars-layouts/index.js')
+        .helpers(require('handlebars-layouts'))
         .helpers('./helpers/**/*.js')
         .helpers({
             foo: function () { ... },
@@ -140,11 +140,11 @@ gulp.task('i18n', function () {
   - `file` `{Boolean}` (default: `false`) Include the file object in the data passed to the template.
   - `compileOptions` `{Object}` Options to use when compiling templates.
   - `templateOptions` `{Object}` Options to use when rendering templates.
-  - `partials` `{String|Array.<String>|Object}`
+  - `partials` `{String|Array.<String>|Object|Function(handlebars)}`
   - `parsePartialName` `{Function(options, file): String}`
-  - `helpers` `{String|Array.<String>|Object}`
+  - `helpers` `{String|Array.<String>|Object|Function(handlebars)}`
   - `parseHelperName` `{Function(options, file): String}`
-  - `decorators` `{String|Array.<String>|Object}`
+  - `decorators` `{String|Array.<String>|Object|Function(handlebars)}`
   - `parseDecoratorName` `{Function(options, file): String}`
   - `data` `{String|Array.<String>|Object}`
   - `parseDataName` `{Function(options, file): String}`
@@ -153,28 +153,28 @@ Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars
 
 ### .partials(pattern [, options]): TransformStream
 
-- `pattern` `{String|Array<String>}`
+- `pattern` `{String|Array<String>|Object|Function(handlebars)}`
 - `options` `{Object}`
 
 Loads additional partials. See [`handlebars-wax`][wax].
 
 ### .helpers(pattern [, options]): TransformStream
 
-- `pattern` `{String|Array<String>}`
+- `pattern` `{String|Array<String>|Object|Function(handlebars)}`
 - `options` `{Object}`
 
 Loads additional helpers. See [`handlebars-wax`][wax].
 
 ### .decorators(pattern [, options]): TransformStream
 
-- `pattern` `{String|Array<String>}`
+- `pattern` `{String|Array<String>|Object|Function(handlebars)}`
 - `options` `{Object}`
 
 Loads additional decorators. See [`handlebars-wax`][wax].
 
 ### .data(pattern [, options]): TransformStream
 
-- `pattern` `{String|Array<String>}`
+- `pattern` `{String|Array<String>|Object}`
 - `options` `{Object}`
 
 Loads additional data. See [`handlebars-wax`][wax].
