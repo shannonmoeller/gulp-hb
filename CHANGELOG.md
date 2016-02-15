@@ -11,8 +11,9 @@ Features:
 
 Breaking changes:
 
-- Upgraded `handlebars-registrar` to `handlebars-wax` which introduces new options, a fluent api for registration, and easier control over naming partials, helpers, and decorators.
 - The `file.data` property is now used as the default context for each template with registered data available as the parent frame and as the `@root` context. See [File-Specific Data](https://github.com/shannonmoeller/gulp-hb#file-specific-data).
+- Upgraded `handlebars-registrar` to `handlebars-wax` which introduces new options, a fluent api for registration, and easier control over naming partials, helpers, and decorators.
+- Auto-generated names based on globbed files no longer resolve to the shortest unique file path. The previous functionality led to many misunderstandings about what partials and helpers would be registered. The logic now works very similarly to that of `gulp.src` where paths are determined based on the globbed portion of a path and the value of `options.base`. In most cases this works how many people asking for support assumed it would work in the first place.
 
 ## 2.6.4
 
