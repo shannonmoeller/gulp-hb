@@ -2,7 +2,7 @@
   "name": "gulp-hb",
   "version": "3.0.0",
   "description": "A sane Handlebars Gulp plugin.",
-  "main": "index.js",
+  "main": "src/gulp-hb.js",
   "scripts": {
     "coveralls": "nyc report -r text-lcov | coveralls",
     "pretest": "xo src/*.js test/*.js",
