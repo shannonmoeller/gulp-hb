@@ -154,34 +154,32 @@ Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars
 ### .partials(pattern [, options]): TransformStream
 
 - `pattern` `{String|Array<String>|Object|Function(handlebars)}`
-- `options` `{Object}`
+- `options` `{Object}` Same options as `hb()`.
 
 Loads additional partials. See [`handlebars-wax`][wax].
 
 ### .helpers(pattern [, options]): TransformStream
 
 - `pattern` `{String|Array<String>|Object|Function(handlebars)}`
-- `options` `{Object}`
+- `options` `{Object}` Same options as `hb()`.
 
 Loads additional helpers. See [`handlebars-wax`][wax].
 
 ### .decorators(pattern [, options]): TransformStream
 
 - `pattern` `{String|Array<String>|Object|Function(handlebars)}`
-- `options` `{Object}`
+- `options` `{Object}` Same options as `hb()`.
 
 Loads additional decorators. See [`handlebars-wax`][wax].
 
 ### .data(pattern [, options]): TransformStream
 
 - `pattern` `{String|Array<String>|Object}`
-- `options` `{Object}`
+- `options` `{Object}` Same options as `hb()`.
 
 Loads additional data. See [`handlebars-wax`][wax].
 
 ## Contribute
-
-[![Tasks][waffle-img]][waffle-url]
 
 Standards for this project, including tests, code coverage, and semantics are enforced with a build tool. Pull requests must include passing tests with 100% code coverage and no linting errors.
 
@@ -217,5 +215,3 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 [npm-url]:       https://npmjs.org/package/gulp-hb
 [travis-img]:    http://img.shields.io/travis/shannonmoeller/gulp-hb.svg?style=flat-square
 [travis-url]:    https://travis-ci.org/shannonmoeller/gulp-hb
-[waffle-img]:    http://img.shields.io/github/issues/shannonmoeller/gulp-hb.svg?style=flat-square
-[waffle-url]:    http://waffle.io/shannonmoeller/gulp-hb
