@@ -1,6 +1,16 @@
-## 3.1.1
+## 4.0.0
 
-Bugfix:
+Bugfixes:
+
+- Many. See [#31](https://github.com/shannonmoeller/gulp-hb/issues/31) for all of the gory details.
+
+Breaking:
+
+- Version 3 switched the `cwd` default from `process.cwd()` to `__dirname`. This change has been reverted and `cwd` will once again default to `process.cwd()`.
+
+## 3.1.1 - 3.2.1
+
+Bugfixes:
 
 - Corrected `main` value in `package.json`. Oops.
 
@@ -10,7 +20,7 @@ Feature:
 
 ## 3.0.0
 
-Bugfix:
+Bugfixes:
 
 - Cross-contamination eliminated by creating a fresh instance of Handlebars every time ([#24](https://github.com/shannonmoeller/gulp-hb/issues/24), [#29](https://github.com/shannonmoeller/gulp-hb/issues/29)).
 
@@ -27,7 +37,7 @@ Breaking changes:
 
 ## 2.6.4
 
-Bugfix:
+Bugfixes:
 
 - Moved template compilation to after the `dataEach()` call to allow the template to be modified in the `dataEach()` callback.
 
