@@ -8,10 +8,6 @@ var handlebarsWax = require('handlebars-wax');
 var path = require('path');
 var through = require('through2');
 
-function getParentDir() {
-	return path.dirname(module.parent.filename);
-}
-
 function logKeys(file, pairs) {
 	var buf = [];
 	var options = {
@@ -37,7 +33,7 @@ function logKeys(file, pairs) {
 
 function gulpHb(options) {
 	var defaults = {
-		cwd: getParentDir(),
+		cwd: process.cwd(),
 		bustCache: true,
 		debug: false,
 		file: false
