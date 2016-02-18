@@ -5,7 +5,6 @@ var columns = require('cli-columns');
 var gutil = require('gulp-util');
 var handlebars = require('handlebars');
 var handlebarsWax = require('handlebars-wax');
-var path = require('path');
 var through = require('through2');
 
 function logKeys(file, pairs) {
