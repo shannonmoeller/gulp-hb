@@ -42,8 +42,12 @@ function gulpHb(options) {
 
 	// Handlebars
 
+	var debug = Number(options.debug) || 0;
 	var hb = gulpHb.handlebars.create();
 	var wax = handlebarsWax(hb, options);
+
+	// set { debug: 2 } to propagate flag to node-glob
+	options.debug = debug < 2;
 
 	if (options.partials) {
 		wax.partials(options.partials);
@@ -82,7 +86,7 @@ function gulpHb(options) {
 				data.file = file;
 			}
 
-			if (options.debug) {
+			if (debug) {
 				logKeys(file, [
 					['context', wax.context],
 					['data', file.data],
