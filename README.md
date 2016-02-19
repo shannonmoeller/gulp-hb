@@ -53,7 +53,7 @@ gulp.task('advanced', function () {
         .decorators('./decorators/**/*.js')
         .decorators({
             baz: function () { ... },
-           qux: function () { ... }
+            qux: function () { ... }
         })
 
         // Data
