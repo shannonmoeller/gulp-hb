@@ -34,18 +34,19 @@ function gulpHb(options) {
 	var defaults = {
 		cwd: process.cwd(),
 		bustCache: true,
-		debug: false,
+		debug: 0,
 		file: false
 	};
 
 	options = assign(defaults, options);
 
-	// Handlebars
-
 	var debug = Number(options.debug) || 0;
 
-	// set { debug: 2 } to propagate flag to node-glob
+	// set { debug: 1 } to output gulp-hb info
+	// set { debug: 2 } to output node-glob info
 	options.debug = debug >= 2;
+
+	// Handlebars
 
 	var hb = gulpHb.handlebars.create();
 	var wax = handlebarsWax(hb, options);
