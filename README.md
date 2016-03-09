@@ -72,7 +72,7 @@ gulp.task('advanced', function () {
 
 ### Template Context
 
-The template context is constructed from pre-registered data and file-specific data. Pre-registered data is used as the root context for all templates and is set using the `.data()` method. File-specific is used as the template context and it set via the [`file.data` property](#file-specific-data-sources).
+The template context is constructed from pre-registered data and file-specific data. Pre-registered data is used as the root context for all templates and is set using the `.data()` method. File-specific data is used as the template context and is set via the [`file.data`](#file-specific-data-sources) property.
 
 #### `@` Data Variables
 
