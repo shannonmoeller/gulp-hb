@@ -70,9 +70,32 @@ gulp.task('advanced', function () {
 });
 ```
 
-### File-Specific Data
+### Template Context
 
-Each file is rendered with `file.data` as the context. This value may be set using other plugins such as [`gulp-data`][gulp-data] or [`gulp-front-matter`][gulp-front-matter]. Registered data is accessible as the parent frame of `file.data` and as the `@root` context. See [`handlebars-wax`][context].
+The template context is constructed from pre-registered data and file-specific data. Pre-registered data is used as the root context for all templates and is set using the `.data()` method. File-specific is used as the template context and it set via the [`file.data` property](#file-specific-data-sources).
+
+#### `@` Data Variables
+
+##### @root
+
+In cases where file-specific data keys collide with pre-registered data keys, you may access the pre-registered data via `@root`:
+
+```handlebars
+{{ foo }}
+{{ @root.foo }}
+```
+
+##### @file
+
+In cases where information about the template file itself is needed, you may access the [file object][file] via `@file`:
+
+```handlebars
+{{ @file.path }}
+```
+
+#### File-specific Data Sources
+
+File-specific data is set via the `file.data` property using other plugins such as [`gulp-data`][gulp-data], [`gulp-data-json`][gulp-data-json], or [`gulp-front-matter`][gulp-front-matter].
 
 ```js
 var gulp = require('gulp');
@@ -82,7 +105,7 @@ var hb = require('gulp-hb');
 
 gulp.task('inject', function () {
     return gulp
-        .src('./src/{,posts/}*.html')
+        .src('./src/*.html')
 
         // Load an associated JSON file per post.
         .pipe(data(function(file) {
@@ -100,7 +123,7 @@ gulp.task('inject', function () {
         .pipe(gulp.dest('./web'));
 ```
 
-### Multiple Data Sources
+#### Multiple Data Sources
 
 Multiple data sources can be used to render the same set of templates to different directories using [`through2`][through2].
 
@@ -137,7 +160,6 @@ gulp.task('i18n', function () {
   - `bustCache` `{Boolean}` (default: `true`) Force reload data, partials, helpers, and decorators.
   - `cwd` `{String}` (default: `process.cwd()`) Current working directory.
   - `debug` `{Number}` (default: `0`) Whether to log registered functions and data (level `1`) and glob parsing (level `2`).
-  - `file` `{Boolean}` (default: `false`) Include the file object in the data passed to the template.
   - `compileOptions` `{Object}` Options to use when compiling templates.
   - `templateOptions` `{Object}` Options to use when rendering templates.
   - `partials` `{String|Array.<String>|Object|Function(handlebars)}`
@@ -195,8 +217,10 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 
 [assemble]: http://assemble.io/
 [context]: https://github.com/shannonmoeller/handlebars-wax#context-and-rendering
+[file]: https://github.com/gulpjs/vinyl#file
 [grunt-hb]: https://github.com/shannonmoeller/grunt-hb#usage
 [gulp-data]: https://github.com/colynb/gulp-data#usage
+[gulp-data-json]: https://github.com/kflorence/gulp-data-json#example
 [gulp-front-matter]: https://github.com/lmtm/gulp-front-matter#usage
 [gulp-handlebars]: https://github.com/lazd/gulp-handlebars#usage
 [handlebars]: https://github.com/wycats/handlebars.js#usage
