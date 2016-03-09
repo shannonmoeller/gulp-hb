@@ -16,8 +16,6 @@ before_install:
 install:
   - npm install
 script:
-  - node -v
-  - npm -v
   - npm test
 after_script:
   - npm run coveralls
