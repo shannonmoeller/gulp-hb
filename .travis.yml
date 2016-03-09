@@ -13,6 +13,7 @@ before_install:
   - source ~/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
+  - npm set progress=false
 install:
   - npm install
 script:
