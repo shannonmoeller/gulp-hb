@@ -1,16 +1,23 @@
 sudo: false
-language: node_js
-node_js:
-  - node
-  - '5.5'
-  - '5.4'
-  - '5.3'
-  - '5.2'
-  - '5.1'
-  - '5.0'
-  - '4.2'
-  - '4.1'
-  - '4.0'
-  - '0.12'
+language: c
+env:
+  - NODE_VERSION="5"
+  - NODE_VERSION="4"
+  - NODE_VERSION="0.12"
+os:
+  - linux
+  - osx
+before_install:
+  - rm -rf ~/.nvm/
+  - git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
+install:
+  - npm install
+script:
+  - node -v
+  - npm -v
+  - npm test
 after_script:
   - npm run coveralls
