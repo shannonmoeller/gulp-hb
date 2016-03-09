@@ -34,8 +34,7 @@ function gulpHb(options) {
 	var defaults = {
 		cwd: process.cwd(),
 		bustCache: true,
-		debug: 0,
-		file: false
+		debug: 0
 	};
 
 	options = assign(defaults, options);
@@ -84,21 +83,21 @@ function gulpHb(options) {
 			var data = assign({}, file.data);
 			var template = wax.compile(file.contents.toString());
 
-			if (options.file) {
-				data.file = file;
-			}
-
 			if (debug) {
 				logKeys(file, [
 					['context', wax.context],
-					['data', file.data],
+					['data', data],
 					['decorators', hb.decorators],
 					['helpers', hb.helpers],
 					['partials', hb.partials]
 				]);
 			}
 
-			file.contents = new Buffer(template(data));
+			file.contents = new Buffer(template(data, {
+				data: {
+					file: file
+				}
+			}));
 
 			this.push(file);
 		} catch (error) {

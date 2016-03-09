@@ -53,31 +53,29 @@ test.cb('should render a template', assert => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'hello ');
+		assert.is(file.contents.toString(), 'hello');
 		assert.end();
 	});
 
 	stream.write(new gutil.File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('hello {{file.relative}}')
+		contents: new Buffer('hello')
 	}));
 });
 
 test.cb('should render a template with file', assert => {
-	const stream = gulpHb({
-		file: true
-	});
+	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'hello fixture/fixture.js');
+		assert.is(file.contents.toString(), 'hello fixture/fixture.html');
 		assert.end();
 	});
 
 	stream.write(new gutil.File({
 		base: __dirname,
-		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('hello {{file.relative}}')
+		path: path.join(__dirname, 'fixture', 'fixture.html'),
+		contents: new Buffer('hello {{@file.relative}}')
 	}));
 });
 
