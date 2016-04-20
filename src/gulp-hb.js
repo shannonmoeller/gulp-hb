@@ -47,7 +47,7 @@ function gulpHb(options) {
 
 	// Handlebars
 
-	var hb = gulpHb.handlebars.create();
+	var hb = options.handlebarsRuntime || gulpHb.handlebars.create();
 	var wax = handlebarsWax(hb, options);
 
 	if (options.partials) {

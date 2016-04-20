@@ -170,6 +170,7 @@ gulp.task('i18n', function () {
   - `parseDecoratorName` `{Function(options, file): String}`
   - `data` `{String|Array.<String>|Object}`
   - `parseDataName` `{Function(options, file): String}`
+  - `handlebarsRuntime` (optional) Pass an instance of the handlebars compiler
 
 Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars] templates to static output.
 
