@@ -160,6 +160,7 @@ gulp.task('i18n', function () {
   - `bustCache` `{Boolean}` (default: `true`) Force reload data, partials, helpers, and decorators.
   - `cwd` `{String}` (default: `process.cwd()`) Current working directory.
   - `debug` `{Number}` (default: `0`) Whether to log registered functions and data (level `1`) and glob parsing (level `2`).
+  - `handlebars` `{Handlebars}` (optional) A specific instance of Handlebars, if needed.
   - `compileOptions` `{Object}` Options to use when compiling templates.
   - `templateOptions` `{Object}` Options to use when rendering templates.
   - `partials` `{String|Array.<String>|Object|Function(handlebars)}`
@@ -170,7 +171,6 @@ gulp.task('i18n', function () {
   - `parseDecoratorName` `{Function(options, file): String}`
   - `data` `{String|Array.<String>|Object}`
   - `parseDataName` `{Function(options, file): String}`
-  - `handlebarsRuntime` (optional) Pass an instance of the handlebars compiler
 
 Returns a Gulp-compatible transform stream that compiles [Handlebars][handlebars] templates to static output.
 
