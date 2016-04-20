@@ -32,8 +32,6 @@ function logKeys(file, pairs) {
 
 function gulpHb(options) {
 	var defaults = {
-		cwd: process.cwd(),
-		bustCache: true,
 		debug: 0
 	};
 
