@@ -98,8 +98,8 @@ function gulpHb(options) {
 			}));
 
 			this.push(file);
-		} catch (error) {
-			this.emit('error', new gutil.PluginError('gulp-hb', error, {
+		} catch (err) {
+			this.emit('error', new gutil.PluginError('gulp-hb', err, {
 				file: file,
 				fileName: file.path,
 				showStack: true

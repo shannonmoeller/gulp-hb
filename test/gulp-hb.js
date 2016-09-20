@@ -1,15 +1,15 @@
+import path from 'path';
 import {Stream} from 'stream';
 import gutil from 'gulp-util';
-import path from 'path';
 import test from 'ava';
 import gulpHb from '../src/gulp-hb';
 
-test.cb('should not render null', assert => {
+test.cb('should not render null', t => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents, null);
-		assert.end();
+		t.is(file.contents, null);
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -19,12 +19,12 @@ test.cb('should not render null', assert => {
 	}));
 });
 
-test.cb('should not render a stream', assert => {
+test.cb('should not render a stream', t => {
 	const stream = gulpHb();
 
 	stream.on('error', error => {
-		assert.is(error.message, 'Streaming not supported.');
-		assert.end();
+		t.is(error.message, 'Streaming not supported.');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -34,12 +34,12 @@ test.cb('should not render a stream', assert => {
 	}));
 });
 
-test.cb('should not render an invalid template', assert => {
+test.cb('should not render an invalid template', t => {
 	const stream = gulpHb();
 
 	stream.on('error', error => {
-		assert.is(error.message.slice(0, 11), 'Parse error');
-		assert.end();
+		t.is(error.message.slice(0, 11), 'Parse error');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -49,12 +49,12 @@ test.cb('should not render an invalid template', assert => {
 	}));
 });
 
-test.cb('should render a template', assert => {
+test.cb('should render a template', t => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'hello');
-		assert.end();
+		t.is(file.contents.toString(), 'hello');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -64,12 +64,12 @@ test.cb('should render a template', assert => {
 	}));
 });
 
-test.cb('should render a template with file', assert => {
+test.cb('should render a template with file', t => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'hello fixture/fixture.html');
-		assert.end();
+		t.is(file.contents.toString(), 'hello fixture/fixture.html');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -79,12 +79,12 @@ test.cb('should render a template with file', assert => {
 	}));
 });
 
-test.cb('should use file data', assert => {
+test.cb('should use file data', t => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'bar');
-		assert.end();
+		t.is(file.contents.toString(), 'bar');
+		t.end();
 	});
 
 	var file = new gutil.File({
@@ -100,7 +100,7 @@ test.cb('should use file data', assert => {
 	stream.write(file);
 });
 
-test.cb('should use registered data', assert => {
+test.cb('should use registered data', t => {
 	const stream = gulpHb({
 		data: {
 			foo: 'fooA'
@@ -112,8 +112,8 @@ test.cb('should use registered data', assert => {
 	});
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'fooA barA');
-		assert.end();
+		t.is(file.contents.toString(), 'fooA barA');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -123,7 +123,7 @@ test.cb('should use registered data', assert => {
 	}));
 });
 
-test.cb('should use registered partial', assert => {
+test.cb('should use registered partial', t => {
 	const stream = gulpHb({
 		partials: {
 			foo: '<div>foo</div>'
@@ -135,8 +135,8 @@ test.cb('should use registered partial', assert => {
 	});
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), '<div>foo</div> <div>bar</div>');
-		assert.end();
+		t.is(file.contents.toString(), '<div>foo</div> <div>bar</div>');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -146,7 +146,7 @@ test.cb('should use registered partial', assert => {
 	}));
 });
 
-test.cb('should use registered helper', assert => {
+test.cb('should use registered helper', t => {
 	const stream = gulpHb({
 		helpers: {
 			foo: function (text) {
@@ -162,8 +162,8 @@ test.cb('should use registered helper', assert => {
 	});
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'fooA barB');
-		assert.end();
+		t.is(file.contents.toString(), 'fooA barB');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -173,7 +173,7 @@ test.cb('should use registered helper', assert => {
 	}));
 });
 
-test.cb('should use registered decorator', assert => {
+test.cb('should use registered decorator', t => {
 	const stream = gulpHb({
 		decorators: {
 			foo: function (program) {
@@ -195,8 +195,8 @@ test.cb('should use registered decorator', assert => {
 	});
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'fooB barB');
-		assert.end();
+		t.is(file.contents.toString(), 'fooB barB');
+		t.end();
 	});
 
 	stream.write(new gutil.File({
@@ -206,8 +206,8 @@ test.cb('should use registered decorator', assert => {
 	}));
 });
 
-test.cb('should display debug info', assert => {
-	assert.plan(3);
+test.cb('should display debug info', t => {
+	t.plan(3);
 
 	const stream = gulpHb({
 		debug: true,
@@ -227,7 +227,7 @@ test.cb('should display debug info', assert => {
 	});
 
 	stream.on('data', file => {
-		assert.is(file.contents.toString(), 'howdy world');
+		t.is(file.contents.toString(), 'howdy world');
 	});
 
 	var fileA = new gutil.File({
@@ -262,5 +262,5 @@ test.cb('should display debug info', assert => {
 	stream.write(fileB);
 	stream.write(fileC);
 
-	setImmediate(assert.end);
+	setImmediate(t.end);
 });
