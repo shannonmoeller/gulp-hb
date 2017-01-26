@@ -40,19 +40,19 @@
   "homepage": "https://github.com/shannonmoeller/gulp-hb",
   "dependencies": {
     "cli-columns": "^1.0.6",
-    "gulp-util": "^3.0.7",
-    "handlebars": "^4.0.5",
-    "handlebars-wax": "^4.0.4",
-    "object-assign": "^4.1.0",
-    "through2": "^2.0.1"
+    "gulp-util": "^3.0.8",
+    "handlebars": "^4.0.6",
+    "handlebars-wax": "^5.0.0",
+    "object-assign": "^4.1.1",
+    "through2": "^2.0.3"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.17.0",
     "chokidar-cli": "^1.2.0",
-    "coveralls": "^2.11.14",
-    "nyc": "^8.3.0",
-    "vinyl-fs": "^2.4.3",
-    "xo": "^0.16.0"
+    "coveralls": "^2.11.15",
+    "nyc": "^10.1.2",
+    "vinyl-fs": "^2.4.4",
+    "xo": "^0.17.1"
   },
   "engines": {
     "node": ">= 0.12"

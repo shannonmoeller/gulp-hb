@@ -72,17 +72,38 @@ gulp.task('advanced', function () {
 
 ### Template Context
 
-The template context is constructed from pre-registered data and file-specific data. Pre-registered data is used as the root context for all templates and is set using the `.data()` method. File-specific data is used as the template context and is set via the [`file.data`](#file-specific-data-sources) property.
+The template context is a merge of pre-registered data and file-specific data. Pre-registered data is available to all templates and is set using the `.data()` method. File-specific data is available to the current template and is set via the [`file.data`](#file-specific-data-sources) property.
 
 #### `@` Data Variables
 
 ##### @root
 
-In cases where file-specific data keys collide with pre-registered data keys, you may access the pre-registered data via `@root`:
+The merged object of pre-registered data and file-specific data is available as the primary context of your templates. In cases where accessing this data would require the use of `../`, you may access the top-level context via `@root`:
 
 ```handlebars
 {{ foo }}
 {{ @root.foo }}
+
+{{#each bar}}
+    {{ ../foo }}
+    {{ @root.foo }}
+{{/each}}
+```
+
+##### @global
+
+In cases where file-specific data keys collide with pre-registered data keys, you may access the pre-registered data via `@global`:
+
+```handlebars
+{{ @global.foo }}
+```
+
+##### @local
+
+In cases where pre-registered data needs to be ignored, you may access the file-specific data via `@local`.
+
+```handlebars
+{{ @local.foo }}
 ```
 
 ##### @file

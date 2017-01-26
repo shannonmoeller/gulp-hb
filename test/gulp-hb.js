@@ -123,6 +123,39 @@ test.cb('should use registered data', t => {
 	}));
 });
 
+test.cb('should set @ data', t => {
+	const stream = gulpHb({
+		data: {
+			foo: 'fooA'
+		}
+	});
+
+	stream.data({
+		bar: 'barA'
+	});
+
+	stream.on('data', file => {
+		t.is(file.contents.toString(), 'fooA fooB fooB fooB barA barB barB barB');
+		t.end();
+	});
+
+	var file = new gutil.File({
+		base: __dirname,
+		path: path.join(__dirname, 'fixture', 'fixture.js'),
+		contents: new Buffer(
+			'{{@global.foo}} {{@local.foo}} {{@root.foo}} {{foo}} ' +
+			'{{@global.bar}} {{@local.bar}} {{@root.bar}} {{bar}}'
+		)
+	});
+
+	file.data = {
+		foo: 'fooB',
+		bar: 'barB'
+	};
+
+	stream.write(file);
+});
+
 test.cb('should use registered partial', t => {
 	const stream = gulpHb({
 		partials: {

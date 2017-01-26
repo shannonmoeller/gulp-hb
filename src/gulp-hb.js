@@ -83,8 +83,8 @@ function gulpHb(options) {
 
 			if (debug) {
 				logKeys(file, [
-					['context', wax.context],
-					['data', data],
+					['global data', wax.context],
+					['local data', data],
 					['decorators', hb.decorators],
 					['helpers', hb.helpers],
 					['partials', hb.partials]
