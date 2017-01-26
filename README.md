@@ -100,7 +100,7 @@ In cases where file-specific data keys collide with pre-registered data keys, yo
 
 ##### @local
 
-In cases where pre-registered data needs to be ignored, you may access the file-specific data via `@local`.
+In cases where pre-registered data should be ignored, you may access the file-specific data via `@local`.
 
 ```handlebars
 {{ @local.foo }}
