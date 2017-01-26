@@ -60,7 +60,7 @@ function gulpHb(options) {
 		wax.decorators(options.decorators);
 	}
 
-	if (options.data) {
+	if (options.data && typeof options.data !== 'function') {
 		wax.data(options.data);
 	}
 
@@ -80,6 +80,10 @@ function gulpHb(options) {
 		try {
 			var data = assign({}, file.data);
 			var template = wax.compile(file.contents.toString());
+
+			if (options.data && typeof options.data === 'function') {
+				wax.data(options.data(file));
+			}
 
 			if (debug) {
 				logKeys(file, [
