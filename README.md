@@ -180,7 +180,7 @@ gulp.task('i18n', function () {
 - `options` `{Object}` (optional) Passed directly to [`handlebars-wax`][wax] so check there for more options.
   - `bustCache` `{Boolean}` (default: `true`) Force reload data, partials, helpers, and decorators.
   - `cwd` `{String}` (default: `process.cwd()`) Current working directory.
-  - `debug` `{Number}` (default: `0`) Whether to log registered functions and data (level `1`) and glob parsing (level `2`).
+  - `debug` `{Boolean|Number}` (default: `false` or `0`) Whether to log registered functions and data (`true` or `1`) and glob parsing (`2`).
   - `handlebars` `{Handlebars}` (optional) A specific instance of Handlebars, if needed.
   - `compileOptions` `{Object}` Options to use when compiling templates.
   - `templateOptions` `{Object}` Options to use when rendering templates.
