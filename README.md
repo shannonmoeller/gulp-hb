@@ -2,13 +2,15 @@
 
 [![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Tip][amazon-img]][amazon-url]
 
-A sane static [Handlebars][handlebars] Gulp plugin. Useful as a static site generator. Think [Assemble][assemble], but with a lot less [Jekyll][jekyll] baggage.
+A sane static [Handlebars][handlebars] Gulp plugin. Useful as a static site generator. Powered by [`handlebars-wax`][wax]. Think [Assemble][assemble], but with a lot less [Jekyll][jekyll] baggage.
 
 For Grunt, see [`grunt-hb`][grunt-hb]. To precompile templates into JavaScript, see [`gulp-handlebars`][gulp-handlebars].
 
 ## Install
 
-    $ npm install --save-dev gulp-hb
+```sh
+npm install --save-dev gulp-hb
+```
 
 ## Usage
 
