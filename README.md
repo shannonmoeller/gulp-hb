@@ -4,7 +4,7 @@
 
 A sane static [Handlebars][handlebars] Gulp plugin. Useful as a static site generator. Powered by [`handlebars-wax`][wax]. Think [Assemble][assemble], but with a lot less [Jekyll][jekyll] baggage.
 
-For Grunt, see [`grunt-hb`][grunt-hb]. To precompile templates into JavaScript, see [`gulp-handlebars`][gulp-handlebars].
+To precompile templates into JavaScript, see [`gulp-handlebars`][gulp-handlebars].
 
 ## Install
 
@@ -242,7 +242,6 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 [assemble]: http://assemble.io/
 [context]: https://github.com/shannonmoeller/handlebars-wax#context-and-rendering
 [file]: https://github.com/gulpjs/vinyl#file
-[grunt-hb]: https://github.com/shannonmoeller/grunt-hb#usage
 [gulp-data]: https://github.com/colynb/gulp-data#usage
 [gulp-data-json]: https://github.com/kflorence/gulp-data-json#example
 [gulp-front-matter]: https://github.com/lmtm/gulp-front-matter#usage
