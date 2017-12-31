@@ -1,6 +1,6 @@
 {
   "name": "gulp-hb",
-  "version": "6.0.2",
+  "version": "7.0.0",
   "description": "A sane Handlebars Gulp plugin.",
   "main": "src/gulp-hb.js",
   "scripts": {
