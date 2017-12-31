@@ -39,22 +39,25 @@
   },
   "homepage": "https://github.com/shannonmoeller/gulp-hb",
   "dependencies": {
-    "cli-columns": "^1.0.6",
-    "gulp-util": "^3.0.8",
-    "handlebars": "^4.0.6",
-    "handlebars-wax": "^5.0.0",
+    "ansi-gray": "^0.1.1",
+    "ansi-green": "^0.1.1",
+    "cli-columns": "^3.1.2",
+    "handlebars": "^4.0.11",
+    "handlebars-wax": "^6.1.0",
     "object-assign": "^4.1.1",
+    "plugin-error": "^0.1.2",
     "through2": "^2.0.3"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^0.24.0",
     "chokidar-cli": "^1.2.0",
-    "coveralls": "^2.11.15",
-    "nyc": "^10.1.2",
-    "vinyl-fs": "^2.4.4",
-    "xo": "^0.17.1"
+    "coveralls": "^3.0.0",
+    "nyc": "^11.4.1",
+    "vinyl": "^2.1.0",
+    "vinyl-fs": "^3.0.1",
+    "xo": "^0.18.2"
   },
   "engines": {
-    "node": ">= 0.12"
+    "node": ">= 4"
   }
 }

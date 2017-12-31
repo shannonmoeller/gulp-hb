@@ -1,6 +1,6 @@
 import path from 'path';
-import {Stream} from 'stream';
-import gutil from 'gulp-util';
+import {Readable} from 'stream';
+import File from 'vinyl';
 import test from 'ava';
 import gulpHb from '../src/gulp-hb';
 
@@ -12,7 +12,7 @@ test.cb('should not render null', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
 		contents: null
@@ -27,10 +27,10 @@ test.cb('should not render a stream', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Stream()
+		contents: new Readable()
 	}));
 });
 
@@ -42,10 +42,10 @@ test.cb('should not render an invalid template', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{>>> derp <<<}}')
+		contents: Buffer.from('{{>>> derp <<<}}')
 	}));
 });
 
@@ -57,10 +57,10 @@ test.cb('should render a template', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('hello')
+		contents: Buffer.from('hello')
 	}));
 });
 
@@ -72,10 +72,10 @@ test.cb('should render a template with file', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.html'),
-		contents: new Buffer('hello {{@file.relative}}')
+		contents: Buffer.from('hello {{@file.relative}}')
 	}));
 });
 
@@ -87,10 +87,10 @@ test.cb('should use file data', t => {
 		t.end();
 	});
 
-	var file = new gutil.File({
+	const file = new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{foo}}')
+		contents: Buffer.from('{{foo}}')
 	});
 
 	file.data = {
@@ -116,10 +116,10 @@ test.cb('should use registered data', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{foo}} {{bar}}')
+		contents: Buffer.from('{{foo}} {{bar}}')
 	}));
 });
 
@@ -139,10 +139,10 @@ test.cb('should set @ data', t => {
 		t.end();
 	});
 
-	var file = new gutil.File({
+	const file = new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer(
+		contents: Buffer.from(
 			'{{@global.foo}} {{@local.foo}} {{@root.foo}} {{foo}} ' +
 			'{{@global.bar}} {{@local.bar}} {{@root.bar}} {{bar}}'
 		)
@@ -172,24 +172,24 @@ test.cb('should use registered partial', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{> foo}} {{> bar}}')
+		contents: Buffer.from('{{> foo}} {{> bar}}')
 	}));
 });
 
 test.cb('should use registered helper', t => {
 	const stream = gulpHb({
 		helpers: {
-			foo: function (text) {
+			foo(text) {
 				return 'foo' + text;
 			}
 		}
 	});
 
 	stream.helpers({
-		bar: function (text) {
+		bar(text) {
 			return 'bar' + text;
 		}
 	});
@@ -199,17 +199,17 @@ test.cb('should use registered helper', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{foo "A"}} {{bar "B"}}')
+		contents: Buffer.from('{{foo "A"}} {{bar "B"}}')
 	}));
 });
 
 test.cb('should use registered decorator', t => {
 	const stream = gulpHb({
 		decorators: {
-			foo: function (program) {
+			foo(program) {
 				return function (context, options) {
 					context.fooA = 'fooB';
 					return program(context, options);
@@ -219,7 +219,7 @@ test.cb('should use registered decorator', t => {
 	});
 
 	stream.decorators({
-		bar: function (program) {
+		bar(program) {
 			return function (context, options) {
 				context.barA = 'barB';
 				return program(context, options);
@@ -232,10 +232,10 @@ test.cb('should use registered decorator', t => {
 		t.end();
 	});
 
-	stream.write(new gutil.File({
+	stream.write(new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'fixture.js'),
-		contents: new Buffer('{{* foo}}{{* bar}}{{fooA}} {{barA}}')
+		contents: Buffer.from('{{* foo}}{{* bar}}{{fooA}} {{barA}}')
 	}));
 });
 
@@ -245,13 +245,13 @@ test.cb('should display debug info', t => {
 	const stream = gulpHb({
 		debug: true,
 		partials: {
-			foo: function () {}
+			foo() {}
 		},
 		helpers: {
-			bar: function () {}
+			bar() {}
 		},
 		decorators: {
-			baz: function () {}
+			baz() {}
 		},
 		data: {
 			greeting: 'hello',
@@ -263,10 +263,10 @@ test.cb('should display debug info', t => {
 		t.is(file.contents.toString(), 'howdy world');
 	});
 
-	var fileA = new gutil.File({
+	const fileA = new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'a.js'),
-		contents: new Buffer('{{greeting}} {{recipient}}')
+		contents: Buffer.from('{{greeting}} {{recipient}}')
 	});
 
 	fileA.data = {
@@ -274,10 +274,10 @@ test.cb('should display debug info', t => {
 		a: 'lorem'
 	};
 
-	var fileB = new gutil.File({
+	const fileB = new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'b.js'),
-		contents: new Buffer('{{greeting}} {{recipient}}')
+		contents: Buffer.from('{{greeting}} {{recipient}}')
 	});
 
 	fileB.data = {
@@ -285,10 +285,10 @@ test.cb('should display debug info', t => {
 		b: 'ipsum'
 	};
 
-	var fileC = new gutil.File({
+	const fileC = new File({
 		base: __dirname,
 		path: path.join(__dirname, 'fixture', 'c.js'),
-		contents: new Buffer('howdy world')
+		contents: Buffer.from('howdy world')
 	});
 
 	stream.write(fileA);

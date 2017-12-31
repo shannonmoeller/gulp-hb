@@ -1,52 +1,51 @@
-'use strict';
-
-var assign = require('object-assign');
-var columns = require('cli-columns');
-var gutil = require('gulp-util');
-var handlebars = require('handlebars');
-var handlebarsWax = require('handlebars-wax');
-var through = require('through2');
+const columns = require('cli-columns');
+const ansiGray = require('ansi-gray');
+const ansiGreen = require('ansi-green');
+const handlebars = require('handlebars');
+const handlebarsWax = require('handlebars-wax');
+const through = require('through2');
+const PluginError = require('plugin-error');
 
 function logKeys(file, pairs) {
-	var buf = [];
-	var options = {
+	const buf = [];
+	const options = {
 		width: process.stdout.columns - 12
 	};
 
-	pairs.forEach(function (pair) {
-		var key = pair[0];
-		var value = pair[1] || '';
+	pairs.forEach(pair => {
+		const key = pair[0];
+		let value = pair[1] || '';
 
 		if (typeof value !== 'string') {
 			value = columns(Object.keys(value), options);
 		}
 
-		buf.push(gutil.colors.grey('    ' + key + ':'));
+		buf.push(ansiGray('    ' + key + ':'));
 		buf.push(value.replace(/^/gm, '      '));
 	});
 
-	console.log('  ' + gutil.colors.green(file.relative));
+	console.log('  ' + ansiGreen(file.relative));
 	console.log(buf.join('\n'));
 	console.log();
 }
 
 function gulpHb(options) {
-	var defaults = {
+	const defaults = {
 		debug: 0
 	};
 
-	options = assign(defaults, options);
+	options = Object.assign(defaults, options);
 
-	var debug = Number(options.debug) || 0;
+	const debug = Number(options.debug) || 0;
 
-	// set { debug: 1 } to output gulp-hb info
-	// set { debug: 2 } to output node-glob info
+	// Set { debug: 1 } to output gulp-hb info
+	// Set { debug: 2 } to output node-glob info
 	options.debug = debug >= 2;
 
 	// Handlebars
 
-	var hb = options.handlebars || gulpHb.handlebars.create();
-	var wax = handlebarsWax(hb, options);
+	const hb = options.handlebars || gulpHb.handlebars.create();
+	const wax = handlebarsWax(hb, options);
 
 	if (options.partials) {
 		wax.partials(options.partials);
@@ -66,20 +65,20 @@ function gulpHb(options) {
 
 	// Stream
 
-	var stream = through.obj(function (file, enc, cb) {
+	const stream = through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
 			return;
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-hb', 'Streaming not supported.'));
+			cb(new PluginError('gulp-hb', 'Streaming not supported.'));
 			return;
 		}
 
 		try {
-			var data = assign({}, file.data);
-			var template = wax.compile(file.contents.toString());
+			const data = Object.assign({}, file.data);
+			const template = wax.compile(file.contents.toString());
 
 			if (debug) {
 				logKeys(file, [
@@ -91,16 +90,16 @@ function gulpHb(options) {
 				]);
 			}
 
-			file.contents = new Buffer(template(data, {
+			file.contents = Buffer.from(template(data, {
 				data: {
-					file: file
+					file
 				}
 			}));
 
 			this.push(file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-hb', err, {
-				file: file,
+			this.emit('error', new PluginError('gulp-hb', err, {
+				file,
 				fileName: file.path,
 				showStack: true
 			}));
