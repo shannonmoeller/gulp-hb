@@ -1,3 +1,5 @@
+'use strict';
+
 const columns = require('cli-columns');
 const ansiGray = require('ansi-gray');
 const ansiGreen = require('ansi-green');
