@@ -8,33 +8,35 @@ To precompile templates into JavaScript, see [`gulp-handlebars`][gulp-handlebars
 
 ## Install
 
-```sh
-npm install --save-dev gulp-hb
+```console
+$ npm install --save-dev gulp-hb
 ```
 
 ## Usage
 
 ```js
-var gulp = require('gulp');
-var hb = require('gulp-hb');
+const gulp = require('gulp');
+const hb = require('gulp-hb');
 
 // Basic
 
-gulp.task('basic', function () {
+function basic() {
     return gulp
         .src('./src/{,posts/}*.html')
-        .pipe(hb({
-            partials: './src/assets/partials/**/*.hbs',
-            helpers: './src/assets/helpers/*.js',
-            data: './src/assets/data/**/*.{js,json}'
+        .pipe(hb()
+            .partials('./src/assets/partials/**/*.hbs')
+            .helpers('./src/assets/helpers/*.js')
+            .data('./src/assets/data/**/*.{js,json}')
         }))
         .pipe(gulp.dest('./web'));
-});
+}
+
+gulp.task('basic', basic);
 
 // Advanced
 
-gulp.task('advanced', function () {
-    var hbStream = hb()
+function advanced() {
+    const hbStream = hb({ debug: true })
         // Partials
         .partials('./partials/components/**/*.{hbs,js}')
         .partials('./partials/layouts/**/*.{hbs,js}')
@@ -69,7 +71,9 @@ gulp.task('advanced', function () {
         .src('./src/{,posts/}*.html')
         .pipe(hbStream)
         .pipe(gulp.dest('./web'));
-});
+}
+
+gulp.task('advanced', advanced);
 ```
 
 ### Template Context
@@ -121,17 +125,17 @@ In cases where information about the template file itself is needed, you may acc
 File-specific data is set via the `file.data` property using other plugins such as [`gulp-data`][gulp-data], [`gulp-data-json`][gulp-data-json], or [`gulp-front-matter`][gulp-front-matter].
 
 ```js
-var gulp = require('gulp');
-var data = require('gulp-data');
-var frontMatter = require('gulp-front-matter');
-var hb = require('gulp-hb');
+const gulp = require('gulp');
+const data = require('gulp-data');
+const frontMatter = require('gulp-front-matter');
+const hb = require('gulp-hb');
 
-gulp.task('inject', function () {
+function inject() {
     return gulp
         .src('./src/*.html')
 
         // Load an associated JSON file per post.
-        .pipe(data(function(file) {
+        .pipe(data((file) => {
             return require(file.path.replace('.html', '.json'));
         }))
 
@@ -144,6 +148,9 @@ gulp.task('inject', function () {
         .pipe(hb().data('./data/**/*.js'))
 
         .pipe(gulp.dest('./web'));
+}
+
+gulp.task('inject', inject);
 ```
 
 #### Multiple Data Sources
@@ -151,16 +158,16 @@ gulp.task('inject', function () {
 Multiple data sources can be used to render the same set of templates to different directories using [`through2`][through2].
 
 ```js
-var gulp = require('gulp');
-var hb = require('gulp-hb');
-var through = require('through2');
+const gulp = require('gulp');
+const hb = require('gulp-hb');
+const through = require('through2');
 
-gulp.task('i18n', function () {
+function i18n() {
     return gulp
         .src('./i18n/*.json')
-        .pipe(through.obj(function (file, enc, cb) {
-            var locale = file.stem;
-            var data = {
+        .pipe(through.obj((file, enc, cb) => {
+            const locale = file.stem;
+            const data = {
                 locale: locale,
                 i18n: JSON.parse(file.contents.toString())
             };
@@ -172,7 +179,9 @@ gulp.task('i18n', function () {
                 .on('error', cb)
                 .on('end', cb);
         }));
-});
+}
+
+gulp.task('i18n', i18n);
 ```
 
 ## API
@@ -231,7 +240,9 @@ Standards for this project, including tests, code coverage, and semantics are en
 
 ### Test
 
-    $ npm test
+```console
+$ npm test
+```
 
 ----
 
