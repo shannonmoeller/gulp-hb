@@ -27,7 +27,7 @@ function basic() {
             .partials('./src/assets/partials/**/*.hbs')
             .helpers('./src/assets/helpers/*.js')
             .data('./src/assets/data/**/*.{js,json}')
-        }))
+        )
         .pipe(gulp.dest('./web'));
 }
 
