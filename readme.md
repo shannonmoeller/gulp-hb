@@ -246,9 +246,7 @@ $ npm test
 
 ----
 
-© Shannon Moeller <me@shannonmoeller.com> (shannonmoeller.com)
-
-Licensed under [MIT](http://shannonmoeller.com/mit.txt)
+MIT © [Shannon Moeller](http://shannonmoeller.com)
 
 [assemble]: http://assemble.io/
 [context]: https://github.com/shannonmoeller/handlebars-wax#context-and-rendering
