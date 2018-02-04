@@ -68,7 +68,7 @@ test.cb('should render a template with file', t => {
 	const stream = gulpHb();
 
 	stream.on('data', file => {
-		t.is(file.contents.toString(), 'hello fixture/fixture.html');
+		t.is(file.contents.toString(), 'hello fixture' + path.sep + 'fixture.html');
 		t.end();
 	});
 
