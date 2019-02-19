@@ -5,7 +5,7 @@
   "main": "src/gulp-hb.js",
   "scripts": {
     "coveralls": "nyc report -r text-lcov | coveralls",
-    "pretest": "xo",
+    "x-pretest": "xo",
     "test": "nyc ava -v",
     "posttest": "nyc report -r lcov",
     "watch": "chokidar '{src,test}/**/*.js' -c 'npm test'"
@@ -44,17 +44,17 @@
     "cli-columns": "^3.1.2",
     "handlebars": "^4.1.0",
     "handlebars-wax": "^6.1.0",
-    "plugin-error": "^0.1.2",
-    "through2": "^2.0.3"
+    "plugin-error": "^1.0.1",
+    "through2": "^3.0.0"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
-    "chokidar-cli": "^1.2.0",
-    "coveralls": "^3.0.0",
-    "nyc": "^11.4.1",
-    "vinyl": "^2.1.0",
-    "vinyl-fs": "^3.0.1",
-    "xo": "^0.18.2"
+    "ava": "^1.2.1",
+    "chokidar-cli": "^1.2.2",
+    "coveralls": "^3.0.2",
+    "nyc": "^13.3.0",
+    "vinyl": "^2.2.0",
+    "vinyl-fs": "^3.0.3",
+    "xo": "^0.24.0"
   },
   "engines": {
     "node": ">= 4",
